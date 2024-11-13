@@ -1,0 +1,3 @@
+[submodule "dice_rl_TU_Vienna"]
+	path = dice_rl_TU_Vienna
+	url = https://github.com/MrWhiteRichard/dice_rl_TU_Vienna.git
