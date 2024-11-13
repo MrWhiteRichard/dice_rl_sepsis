@@ -1,3 +1,6 @@
 [submodule "dice_rl_TU_Vienna"]
 	path = dice_rl_TU_Vienna
 	url = https://github.com/MrWhiteRichard/dice_rl_TU_Vienna.git
+[submodule "medical_rl"]
+	path = medical_rl
+	url = https://github.com/lorenzkap/medical_rl.git
