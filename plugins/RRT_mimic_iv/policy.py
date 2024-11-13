@@ -5,7 +5,7 @@ import numpy as np
 from RRT_mimic_iv.data_formatter import MimicIVFormatter
 
 from dice_rl_TU_Vienna.policy import MyTFPolicy
-from dice_rl_TU_Vienna.applications.RRT_mimic_iv.specs import get_observation_action_spec_RRT_mimic_iv
+from plugins.RRT_mimic_iv.specs import get_observation_action_spec_RRT_mimic_iv
 
 # ---------------------------------------------------------------- #
 

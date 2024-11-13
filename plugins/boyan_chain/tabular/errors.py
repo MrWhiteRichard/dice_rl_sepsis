@@ -7,7 +7,7 @@ from dice_rl_TU_Vienna.estimators.tabular.tabular_dice          import TabularDi
 from dice_rl_TU_Vienna.estimators.tabular.tabular_dual_dice     import TabularDualDice
 from dice_rl_TU_Vienna.estimators.tabular.tabular_gradient_dice import TabularGradientDice
 
-from dice_rl_TU_Vienna.applications.boyan_chain.tabular.config import *
+from plugins.boyan_chain.tabular.config import *
 
 # ---------------------------------------------------------------- #
 

@@ -4,7 +4,7 @@ from gymnasium import Env
 from gymnasium.spaces import Discrete
 
 from dice_rl_TU_Vienna.environment import MyTFEnvironment
-from dice_rl_TU_Vienna.applications.boyan_chain.specs import get_observation_action_spec
+from plugins.boyan_chain.specs import get_observation_action_spec
 from dice_rl_TU_Vienna.wrappers import AbsorbingWrapper, LoopingWrapper
 
 # ---------------------------------------------------------------- #

@@ -3,7 +3,7 @@
 import os
 
 from dice_rl.environments.env_policies import get_env_and_policy
-from dice_rl_TU_Vienna.applications.dice_rl.dataset import (
+from plugins.dice_rl.dataset import (
     get_hparam_str_dataset, load_or_create_dataset, )
 
 # ---------------------------------------------------------------- #

@@ -5,8 +5,8 @@ from tf_agents.specs import TensorSpec
 
 from RRT_mimic_iv.data_formatter import MimicIVFormatter
 
-from dice_rl_TU_Vienna.applications.medical_rl.dataset import TFOffpolicyDatasetGenerator
-from dice_rl_TU_Vienna.applications.RRT_mimic_iv.specs import get_observation_action_spec_RRT_mimic_iv
+from plugins.medical_rl.dataset import TFOffpolicyDatasetGenerator
+from plugins.RRT_mimic_iv.specs import get_observation_action_spec_RRT_mimic_iv
 
 
 class TFOffpolicyDatasetGeneratorSepsisMimicIV(TFOffpolicyDatasetGenerator):

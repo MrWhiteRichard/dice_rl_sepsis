@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 
 from dice_rl_TU_Vienna.policy import MyTFPolicy
-from dice_rl_TU_Vienna.applications.boyan_chain.specs import get_observation_action_spec_boyan_chain
+from plugins.boyan_chain.specs import get_observation_action_spec_boyan_chain
 
 # ---------------------------------------------------------------- #
 

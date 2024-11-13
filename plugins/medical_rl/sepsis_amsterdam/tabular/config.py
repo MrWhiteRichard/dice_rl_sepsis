@@ -3,13 +3,13 @@
 import os
 import warnings
 
-from dice_rl_TU_Vienna.applications.medical_rl.tabular.policy import TFPolicyMedicalRLTabular
-from dice_rl_TU_Vienna.applications.medical_rl.column_labels import get_column_labels
-from dice_rl_TU_Vienna.applications.medical_rl.dataset import (
+from plugins.medical_rl.tabular.policy import TFPolicyMedicalRLTabular
+from plugins.medical_rl.column_labels import get_column_labels
+from plugins.medical_rl.dataset import (
     load_or_create_dataset_medical_rl, load_or_create_dataset_medical_rl_simulator, )
 
 from dice_rl_TU_Vienna.wrappers import AbsorbingWrapper, LoopingWrapper
-from dice_rl_TU_Vienna.applications.stable_baslines.policy import load_or_create_model_MaskablePPO
+from plugins.stable_baslines.policy import load_or_create_model_MaskablePPO
 
 from medical_rl.data_formatters.amsterdam import AmsterdamFormatter
 from medical_rl.libs.cluster import get_data_clustered_completed

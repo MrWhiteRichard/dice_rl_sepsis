@@ -8,12 +8,12 @@ from gymnasium.wrappers.time_limit import TimeLimit
 
 from dice_rl_TU_Vienna.wrappers import LoopingWrapper
 from dice_rl_TU_Vienna.dataset import load_or_create_dataset_Experience
-from dice_rl_TU_Vienna.applications.stable_baslines.policy import (
+from plugins.stable_baslines.policy import (
     load_or_create_model_PPO, get_TFPolicyPPO_from_env_model, )
 
-from dice_rl_TU_Vienna.applications.gymnasium.frozen_lake.transition_lister import (
+from plugins.gymnasium.frozen_lake.transition_lister import (
     get_transitions_sample_env, get_transitions_sample_dataset, get_transitions_exact, )
-from dice_rl_TU_Vienna.applications.gymnasium.frozen_lake.analytical_solver import AnalyticalSolverFrozenLake
+from plugins.gymnasium.frozen_lake.analytical_solver import AnalyticalSolverFrozenLake
 
 # ---------------------------------------------------------------- #
 

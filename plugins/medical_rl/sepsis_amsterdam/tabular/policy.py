@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------- #
 
-from dice_rl_TU_Vienna.applications.stable_baslines.policy import TFPolicyMaskablePPO
-from dice_rl_TU_Vienna.applications.medical_rl.tabular.specs import get_observation_action_spec_medical_rl_tabular
+from plugins.stable_baslines.policy import TFPolicyMaskablePPO
+from plugins.medical_rl.tabular.specs import get_observation_action_spec_medical_rl_tabular
 
 # ---------------------------------------------------------------- #
 

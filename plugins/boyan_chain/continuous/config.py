@@ -3,11 +3,11 @@
 import os
 
 from dice_rl_TU_Vienna.dataset import load_or_create_dataset_Experience
-from dice_rl_TU_Vienna.applications.boyan_chain.policy import TFPolicyBoyanChain
-from dice_rl_TU_Vienna.applications.boyan_chain.environment import get_env
-from dice_rl_TU_Vienna.applications.boyan_chain.analytical_solver import AnalyticalSolverBoyanChain
+from plugins.boyan_chain.policy import TFPolicyBoyanChain
+from plugins.boyan_chain.environment import get_env
+from plugins.boyan_chain.analytical_solver import AnalyticalSolverBoyanChain
 
-from dice_rl_TU_Vienna.applications.boyan_chain.specs import get_observation_action_spec_boyan_chain
+from plugins.boyan_chain.specs import get_observation_action_spec_boyan_chain
 from dice_rl_TU_Vienna.dataset import get_dataset_spec
 
 # ---------------------------------------------------------------- #

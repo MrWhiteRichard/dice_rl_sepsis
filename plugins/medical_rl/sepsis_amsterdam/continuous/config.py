@@ -2,8 +2,8 @@
 
 import os
 
-from dice_rl_TU_Vienna.applications.medical_rl.dataset import load_or_create_dataset_medical_rl
-from dice_rl_TU_Vienna.applications.medical_rl.continuous.policy import (
+from plugins.medical_rl.dataset import load_or_create_dataset_medical_rl
+from plugins.medical_rl.continuous.policy import (
     TFPolicyMedicalRLContinuous, load_model_medical_rl_continuous, )
 
 from medical_rl.data_formatters.amsterdam import AmsterdamFormatter

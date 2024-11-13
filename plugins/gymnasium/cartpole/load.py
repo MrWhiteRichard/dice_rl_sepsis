@@ -2,16 +2,16 @@
 
 import gymnasium as gym
 
-from dice_rl_TU_Vienna.applications.stable_baslines.policy import (
+from plugins.stable_baslines.policy import (
     get_TFPolicyPPO_from_env_model, load_or_create_model_PPO, )
 
-from dice_rl_TU_Vienna.applications.gymnasium.cartpole.config import *
+from plugins.gymnasium.cartpole.config import *
 from dice_rl_TU_Vienna.dataset import load_or_create_dataset_StepsEpisodes
 from dice_rl_TU_Vienna.value import get_get_policy_value_env
 
 from dice_rl_TU_Vienna.wrappers import AbsorbingWrapper
 
-from dice_rl_TU_Vienna.applications.gymnasium.cartpole.config import *
+from plugins.gymnasium.cartpole.config import *
 
 # ---------------------------------------------------------------- #
 

@@ -4,7 +4,7 @@ import os
 
 from dice_rl.data.dataset import Dataset
 
-from dice_rl_TU_Vienna.applications.dice_rl.create_dataset import create_dataset
+from plugins.dice_rl.create_dataset import create_dataset
 
 # ---------------------------------------------------------------- #
 

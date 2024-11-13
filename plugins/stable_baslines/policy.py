@@ -9,7 +9,7 @@ from stable_baselines3 import PPO
 from sb3_contrib import MaskablePPO
 
 from dice_rl_TU_Vienna.policy import MyTFPolicy
-from dice_rl_TU_Vienna.applications.stable_baslines.specs import get_observation_action_spec_from_env
+from plugins.stable_baslines.specs import get_observation_action_spec_from_env
 
 # ---------------------------------------------------------------- #
 

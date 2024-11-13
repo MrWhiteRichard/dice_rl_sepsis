@@ -11,8 +11,8 @@ from dice_rl.data.dataset import EnvStep
 from dice_rl.data.tf_offpolicy_dataset import TFOffpolicyDataset
 
 from dice_rl_TU_Vienna.specs import get_step_num_spec
-from dice_rl_TU_Vienna.applications.dice_rl.create_dataset import add_episodes_to_dataset
-from dice_rl_TU_Vienna.applications.medical_rl.specs import get_observation_action_spec_medical_rl
+from plugins.dice_rl.create_dataset import add_episodes_to_dataset
+from plugins.medical_rl.specs import get_observation_action_spec_medical_rl
 
 from medical_rl.data_formatters.amsterdam import AmsterdamFormatter
 

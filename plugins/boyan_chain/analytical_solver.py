@@ -3,8 +3,8 @@
 import numpy as np
 import tensorflow as tf
 
-from dice_rl_TU_Vienna.applications.boyan_chain.environment import get_env
-from dice_rl_TU_Vienna.applications.boyan_chain.policy import TFPolicyBoyanChain
+from plugins.boyan_chain.environment import get_env
+from plugins.boyan_chain.policy import TFPolicyBoyanChain
 
 from dice_rl_TU_Vienna.estimators.tabular.analytical_solver import AnalyticalSolver
 

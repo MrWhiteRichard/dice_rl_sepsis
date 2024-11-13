@@ -3,7 +3,7 @@
 from medical_rl.libs.RL import Model
 
 from dice_rl_TU_Vienna.policy import MyTFPolicy
-from dice_rl_TU_Vienna.applications.medical_rl.continuous.specs import get_observation_action_spec_medical_rl_continuous
+from plugins.medical_rl.continuous.specs import get_observation_action_spec_medical_rl_continuous
 
 # ---------------------------------------------------------------- #
 

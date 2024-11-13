@@ -6,7 +6,7 @@ from dice_rl_TU_Vienna.runners.neural_gradient_dice_runner import NeuralGradient
 
 from dice_rl_TU_Vienna.dataset import one_hot_encode_observation
 
-from dice_rl_TU_Vienna.applications.boyan_chain.continuous.config import *
+from plugins.boyan_chain.continuous.config import *
 
 from utils.bedtime import computer_sleep
 

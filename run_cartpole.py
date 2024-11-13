@@ -6,7 +6,7 @@ from dice_rl_TU_Vienna.runners.neural_dual_dice_runner     import NeuralDualDice
 from dice_rl_TU_Vienna.runners.neural_gen_dice_runner      import NeuralGenDiceRunner
 from dice_rl_TU_Vienna.runners.neural_gradient_dice_runner import NeuralGradientDiceRunner
 
-from dice_rl_TU_Vienna.applications.gymnasium.cartpole.load import *
+from plugins.gymnasium.cartpole.load import *
 
 from utils.bedtime import computer_sleep
 
