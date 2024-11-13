@@ -6,7 +6,7 @@ from dice_rl_TU_Vienna.runners.neural_dual_dice_runner     import NeuralDualDice
 from dice_rl_TU_Vienna.runners.neural_gen_dice_runner      import NeuralGenDiceRunner
 from dice_rl_TU_Vienna.runners.neural_gradient_dice_runner import NeuralGradientDiceRunner
 
-from plugins.medical_rl.continuous.config import *
+from plugins.medical_rl.sepsis_amsterdam.continuous.config import *
 
 from utils.bedtime import computer_sleep
 
