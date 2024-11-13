@@ -4,3 +4,6 @@
 [submodule "medical_rl"]
 	path = medical_rl
 	url = https://github.com/lorenzkap/medical_rl.git
+[submodule "sepsis_amsterdam"]
+	path = sepsis_amsterdam
+	url = https://github.com/MrWhiteRichard/sepsis_amsterdam.git
