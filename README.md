@@ -40,23 +40,23 @@ replace `'/'` by `'_'`.
 
 ### Generic Algorithm Code
 
-`dice_rl`:
+- `dice_rl`:
 fork of the original repository [`dice_rl`](https://github.com/google-research/dice_rl.git)
 
-`dice_rl_TU_Vienna`:
+- `dice_rl_TU_Vienna`:
 re-implementation of all Dice-algorithms and related base calsses for tools like analytical solvers, plotting, dataset conversion, etc.
 
 ### Application Specific `dice_rl`-Code
 
-`plugins`:
+- `plugins`:
 outsource code for your custom application, so you don't have everything in the `.ipynb`-notebooks and `.py`-scripts
 
-`.ipynb`-notebooks and `.py`-scripts are run on the highest hierachical level.
+- `.ipynb`-notebooks and `.py`-scripts are run on the highest hierachical level.
 
 ### Application Specific Dependencies
 
-`medical_rl`:
+- `medical_rl`:
 preprocessors and base classes for medical reinforcement learning applications
 
-`sepsis_amsterdam`:
+- `sepsis_amsterdam`:
 code for sepsis treatement via reinforcement learning using [AmsterdamUMCdb](https://amsterdammedicaldatascience.nl/amsterdamumcdb/)
