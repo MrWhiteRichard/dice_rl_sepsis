@@ -3,7 +3,7 @@ import numpy as np
 from dice_rl_TU_Vienna.specs import get_observation_action_spec
 
 
-def get_observation_action_spec_medical_rl_continuous(bounds):
+def get_observation_action_spec_sepsis_amsterdam_continuous(bounds):
     obs_min, obs_max, act_min, act_max = bounds
 
     return get_observation_action_spec(

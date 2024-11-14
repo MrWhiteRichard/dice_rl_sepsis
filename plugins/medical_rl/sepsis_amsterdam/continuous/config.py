@@ -2,12 +2,6 @@
 
 import os
 
-from plugins.medical_rl.dataset import load_or_create_dataset_medical_rl
-from plugins.medical_rl.continuous.policy import (
-    TFPolicyMedicalRLContinuous, load_model_medical_rl_continuous, )
-
-from medical_rl.data_formatters.amsterdam import AmsterdamFormatter
-
 # ---------------------------------------------------------------- #
 
 data_dir = os.path.join("data", "medical_rl")
@@ -50,35 +44,5 @@ policy_dir  = os.path.join(y, f"{hparam_str_policy}.h5")
 save_dir    = os.path.join(z, hparam_str_dataset)
 
 save_dir_images = os.path.join(outputs_dir, hparam_str_dataframe, "images")
-
-# ---------------------------------------------------------------- #
-
-_, _, test, bounds = AmsterdamFormatter().load_random_split_and_bounds(
-    os.path.join(data_dir, "splits"), seed,
-    train_size, valid_size, test_size )
-
-obs_min, obs_max, act_min, act_max = bounds
-
-evaluation_model = load_model_medical_rl_continuous(
-    policy_n_neurons, policy_learning_rate, policy_batch_size, policy_gamma,
-    policy_dir)
-
-# trash_model = load_model_medical_rl_continuous(
-    # policy_n_neurons)
-
-# ---------------------------------------------------------------- #
-
-dataset = load_or_create_dataset_medical_rl(
-    dataset_dir=dataset_dir,
-    data=test,
-    bounds=bounds,
-    n_pads=n_pads,
-)
-
-evaluation_policy = TFPolicyMedicalRLContinuous(
-    evaluation_model, bounds, )
-
-# trash_policy = TFPolicyMedicalRLContinuous(
-#     trash_model, bounds, )
 
 # ---------------------------------------------------------------- #
