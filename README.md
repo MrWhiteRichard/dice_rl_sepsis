@@ -59,4 +59,11 @@ outsource code for your custom application, so you don't have everything in the 
 preprocessors and base classes for medical reinforcement learning applications
 
 - `sepsis_amsterdam`:
-code for sepsis treatement via reinforcement learning using [AmsterdamUMCdb](https://amsterdammedicaldatascience.nl/amsterdamumcdb/)
+code for sepsis treatement via reinforcement learning using
+    the database [AmsterdamUMCdb](https://amsterdammedicaldatascience.nl/amsterdamumcdb/)
+
+- `sepsis_mimic_iv`:
+code for sepsis treatement via reinforcement learning using
+    the database [MIMIC-IV](https://www.nature.com/articles/s41597-022-01899-x)
+    and
+    model by [Komorovski et al.](https://www.nature.com/articles/s41591-018-0213-5)
