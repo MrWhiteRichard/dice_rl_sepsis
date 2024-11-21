@@ -1,27 +1,25 @@
 # ---------------------------------------------------------------- #
 
-import numpy as np
-
-from dice_rl_TU_Vienna.specs import get_observation_action_spec
+from dice_rl_TU_Vienna.specs import (
+    get_observation_action_spec_tabular,
+    get_observation_action_spec_continuous, )
 
 # ---------------------------------------------------------------- #
 
-def get_observation_action_spec_boyan_chain(N, tabular_continuous):
+def get_observation_action_spec_boyan_chain_tabular(N):
+    bounds = 0, N, 0, 1
+    return get_observation_action_spec_tabular(bounds)
 
-    if tabular_continuous == "tabular":
-        return get_observation_action_spec(
-            obs_shape=(), act_shape=(),
-            obs_dtype=np.int64, act_dtype=np.int64,
-            obs_min=0, obs_max=N, act_min=0, act_max=1,
-        )
 
-    if tabular_continuous == "continuous":
-        return get_observation_action_spec(
-            obs_shape=(N+1,), act_shape=(),
-            obs_dtype=np.float32, act_dtype=np.int64,
-            obs_min=0, obs_max=1, act_min=0, act_max=1,
-        )
+def get_observation_action_spec_boyan_chain_continuous(N):
+    bounds = 0, 1, 0, 1
+    shapes = (N+1,), ()
+    return get_observation_action_spec_continuous(bounds, shapes)
 
-    raise NotImplementedError
+
+get_observation_action_spec_boyan_chain = {
+    "tabular": get_observation_action_spec_boyan_chain_tabular,
+    "continuous": get_observation_action_spec_boyan_chain_continuous,
+}
 
 # ---------------------------------------------------------------- #
