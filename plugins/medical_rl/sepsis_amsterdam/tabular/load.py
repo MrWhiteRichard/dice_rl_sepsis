@@ -3,22 +3,20 @@
 import os
 import warnings
 
-from plugins.medical_rl.sepsis_amsterdam.tabular.policy import TFPolicyMedicalRLTabular
-from plugins.medical_rl.sepsis_amsterdam.column_labels import get_column_labels
+from dice_rl_TU_Vienna.wrappers import AbsorbingWrapper, LoopingWrapper
+from dice_rl_TU_Vienna.specs import get_observation_action_spec_tabular
+from dice_rl_TU_Vienna.plugins.stable_baselines3.policy import load_or_create_model_MaskablePPO
 from dice_rl_TU_Vienna.dataset import (
     load_or_create_dataset_StepsEpisodes,
     load_or_create_dataset_Dataframe, )
 
-from dice_rl_TU_Vienna.wrappers import AbsorbingWrapper, LoopingWrapper
-from plugins.stable_baslines.policy import load_or_create_model_MaskablePPO
+from plugins.medical_rl.sepsis_amsterdam.tabular.config import *
+from plugins.medical_rl.sepsis_amsterdam.tabular.policy import TFPolicyMedicalRLTabular
+from plugins.medical_rl.sepsis_amsterdam.column_labels import get_column_labels
 
 from medical_rl.data_formatters.amsterdam import AmsterdamFormatter
 from medical_rl.libs.cluster import get_data_clustered_completed
 from medical_rl.libs.envs import get_env
-
-from plugins.medical_rl.sepsis_amsterdam.tabular.config import *
-from plugins.medical_rl.sepsis_amsterdam.tabular.specs import \
-    get_observation_action_spec_sepsis_amsterdam_tabular
 
 # ---------------------------------------------------------------- #
 
@@ -48,8 +46,7 @@ bounds = AmsterdamFormatter().RL_bounds(n_clusters=n_clusters)
 obs_min, obs_max, act_min, act_max = bounds
 
 print("getting observation_action_spec")
-observation_action_spec = \
-    get_observation_action_spec_sepsis_amsterdam_tabular(bounds)
+observation_action_spec = get_observation_action_spec_tabular(bounds)
 
 # -------------------------------- #
 
