@@ -3,15 +3,13 @@
 import os
 
 from dice_rl_TU_Vienna.dataset import load_or_create_dataset_Dataframe
+from dice_rl_TU_Vienna.specs import get_observation_action_spec_continuous
 
 from plugins.medical_rl.sepsis_amsterdam.continuous.config import *
 from plugins.medical_rl.sepsis_amsterdam.continuous.policy import (
     TFPolicyMedicalRLContinuous, load_model_medical_rl_continuous, )
 
 from medical_rl.data_formatters.amsterdam import AmsterdamFormatter
-
-from plugins.medical_rl.sepsis_amsterdam.continuous.specs import \
-    get_observation_action_spec_sepsis_amsterdam_continuous
 
 # ---------------------------------------------------------------- #
 
@@ -21,8 +19,7 @@ _, _, test, bounds = AmsterdamFormatter().load_random_split_and_bounds(
     train_size, valid_size, test_size )
 
 print("getting observation_action_spec")
-observation_action_spec = \
-    get_observation_action_spec_sepsis_amsterdam_continuous(bounds)
+observation_action_spec = get_observation_action_spec_continuous(bounds, ( (382,), (), ))
 
 print("getting model")
 evaluation_model = load_model_medical_rl_continuous(
