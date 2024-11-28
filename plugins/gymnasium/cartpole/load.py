@@ -41,18 +41,6 @@ dataset = load_or_create_dataset_StepsEpisodes(
 get_policy_value = {}
 rewards = {}
 
-for k in K:
-    x, y = get_get_policy_value_env(
-        env=env,
-        get_act=get_act[k],
-        num_trajectory=num_trajectory,
-        pad_rew=-1,
-        verbosity=1,
-    )
-
-    get_policy_value[k] = x
-    rewards[k] = y
-
-target_policy = get_TFPolicyPPO_from_env_model(env=env, model=model["e"])
+target_policy = get_TFPolicyPPO(env=env, model=model["e"])
 
 # ---------------------------------------------------------------- #
