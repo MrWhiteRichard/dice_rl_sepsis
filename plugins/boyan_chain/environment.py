@@ -4,8 +4,9 @@ from gymnasium import Env
 from gymnasium.spaces import Discrete
 
 from dice_rl_TU_Vienna.environment import MyTFEnvironment
-from plugins.boyan_chain.specs import get_observation_action_spec
 from dice_rl_TU_Vienna.wrappers import AbsorbingWrapper, LoopingWrapper
+
+from plugins.boyan_chain.specs import get_observation_action_spec_boyan_chain_continuous
 
 # ---------------------------------------------------------------- #
 
@@ -79,6 +80,6 @@ class TFPyBoyanChain(MyTFEnvironment):
     def __init__(self, N, kind, seed=None):
         super().__init__(
             BoyanChain(N, kind, seed), # type: ignore
-            *get_observation_action_spec(N) ) # type: ignore
+            *get_observation_action_spec_boyan_chain_continuous(N) ) # type: ignore
 
 # ---------------------------------------------------------------- #
