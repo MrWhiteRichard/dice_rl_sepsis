@@ -5,8 +5,10 @@ from dice_rl_TU_Vienna.runners.neural_gen_dice_runner      import NeuralGenDiceR
 from dice_rl_TU_Vienna.runners.neural_gradient_dice_runner import NeuralGradientDiceRunner
 
 from dice_rl_TU_Vienna.dataset import one_hot_encode_observation
+from dice_rl_TU_Vienna.runners.aux_recorders import aux_recorder_cos_angle
 
 from plugins.boyan_chain.continuous.config import *
+from plugins.boyan_chain.continuous.load import *
 
 from utils.bedtime import computer_sleep
 
@@ -19,21 +21,24 @@ regularizer_mlp = 0.0
 
 # ---------------------------------------------------------------- #
 
-for seed in [1, 2, 3]:
+for seed in [0, 1, 2, 3]:
 
     # episodic
     k = "e"
     save_dir = os.path.join(outputs_dir, hparam_str_policy, hparam_str_dataset[seed][k])
 
-    A = [1.5] * 3
-    B = [0.005, 0.001, 0.001]
-    C = [0.1, 0.5, 0.9]
-    for f_exponent, learning_rate, gamma in zip(A, B, C):
-        break
+    f_exponent = 1.5
+    regularizer_norm = 1.0
+
+    A = [0.005, 0.001, 0.001]
+    B = [0.1, 0.5, 0.9]
+    for learning_rate, gamma in zip(A, B):
+        # break
         neural_dual_dice_runner = NeuralDualDiceRunner(
             gamma=gamma,
             num_steps=num_steps,
             batch_size=batch_size,
+            seed=seed,
             primal_hidden_dims=hidden_dims,
             dual_hidden_dims=hidden_dims,
             primal_learning_rate=learning_rate,
@@ -48,17 +53,19 @@ for seed in [1, 2, 3]:
             by=by,
             analytical_solver=analytical_solver[k],
             env_step_preprocessing=one_hot_encode_observation,
+            aux_recorder=aux_recorder_cos_angle,
+            aux_recorder_pbar=["cos_angle"],
         )
 
-    A = [1.0] * 3
-    B = [0.005, 0.001, 0.001]
-    C = [0.1, 0.5, 0.9]
-    for regularizer_norm, learning_rate, gamma in zip(A, B, C):
-        break
+    A = [0.005, 0.001, 0.001]
+    B = [0.1, 0.5, 0.9]
+    for learning_rate, gamma in zip(A, B):
+        # break
         neural_gen_dice_runner = NeuralGenDiceRunner(
             gamma=gamma,
             num_steps=num_steps,
             batch_size=batch_size,
+            seed=seed,
             primal_hidden_dims=hidden_dims,
             dual_hidden_dims=hidden_dims,
             primal_learning_rate=learning_rate,
@@ -74,18 +81,20 @@ for seed in [1, 2, 3]:
             by=by,
             analytical_solver=analytical_solver[k],
             env_step_preprocessing=one_hot_encode_observation,
+            aux_recorder=aux_recorder_cos_angle,
+            aux_recorder_pbar=["cos_angle"],
         )
 
-    A = [1.0] * 3
-    B = [0.005, 0.005, 0.005]
-    C = [0.1, 0.5, 0.9]
+    A = [0.005, 0.005, 0.005]
+    B = [0.1, 0.5, 0.9]
 
-    for regularizer_norm, learning_rate, gamma in zip(A, B, C):
-        break
+    for learning_rate, gamma in zip(A, B):
+        # break
         neural_gen_dice_runner = NeuralGradientDiceRunner(
             gamma=gamma,
             num_steps=num_steps,
             batch_size=batch_size,
+            seed=seed,
             primal_hidden_dims=hidden_dims,
             dual_hidden_dims=hidden_dims,
             primal_learning_rate=learning_rate,
@@ -101,6 +110,8 @@ for seed in [1, 2, 3]:
             by=by,
             analytical_solver=analytical_solver[k],
             env_step_preprocessing=one_hot_encode_observation,
+            aux_recorder=aux_recorder_cos_angle,
+            aux_recorder_pbar=["cos_angle"],
         )
 
     # continuing
@@ -110,11 +121,12 @@ for seed in [1, 2, 3]:
     A = [0.01]
     B = [0.5]
     for learning_rate, regularizer_norm in zip(A, B):
-        break
+        # break
         neural_gen_dice_runner = NeuralGenDiceRunner(
             gamma=1.0,
             num_steps=num_steps,
             batch_size=batch_size,
+            seed=seed,
             primal_hidden_dims=hidden_dims,
             dual_hidden_dims=hidden_dims,
             primal_learning_rate=learning_rate,
@@ -130,16 +142,19 @@ for seed in [1, 2, 3]:
             by=by,
             analytical_solver=analytical_solver[k],
             env_step_preprocessing=one_hot_encode_observation,
+            aux_recorder=aux_recorder_cos_angle,
+            aux_recorder_pbar=["cos_angle"],
         )
 
     A = [0.01]
     B = [0.1]
     for learning_rate, regularizer_norm in zip(A, B):
-        break
+        # break
         neural_gradient_dice_runner = NeuralGradientDiceRunner(
             gamma=1.0,
             num_steps=num_steps,
             batch_size=batch_size,
+            seed=seed,
             primal_hidden_dims=hidden_dims,
             dual_hidden_dims=hidden_dims,
             primal_learning_rate=learning_rate,
@@ -155,6 +170,8 @@ for seed in [1, 2, 3]:
             by=by,
             analytical_solver=analytical_solver[k],
             env_step_preprocessing=one_hot_encode_observation,
+            aux_recorder=aux_recorder_cos_angle,
+            aux_recorder_pbar=["cos_angle"],
         )
 
 # ---------------------------------------------------------------- #
