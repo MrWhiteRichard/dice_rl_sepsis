@@ -37,7 +37,7 @@ def get_plot_logs(
             },
         ]
 
-    error_tags = ["pv_error", "sdc_L2_error", "norm_error"]
+    error_tags = ["pv_error_s", "pv_error_w", "sdc_L2_error", "norm_error"]
     plot_types = ["plot", "semilogy", "plot"]
 
     return get_plot_logs_general(

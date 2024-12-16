@@ -12,6 +12,8 @@ outputs_dir  = os.path.join(data_dir, "outputs")
 
 save_dir_images = os.path.join(outputs_dir, "images")
 
+by = "episodes"
+
 K = ["b", "e"]
 names = { "b": "behavior", "e": "evaluation", }
 
@@ -27,7 +29,7 @@ hparam_str_dataset = "_".join([
     f"{num_trajectory=}", f"{max_trajectory_length=}", f"{seed=}",
 ])
 
-model_dir   = {
+model_dir = {
     k: os.path.join(policies_dir, hparam_str_policy[k])
         for k in K
 }

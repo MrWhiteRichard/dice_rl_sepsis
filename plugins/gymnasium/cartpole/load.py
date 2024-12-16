@@ -3,7 +3,6 @@
 import gymnasium as gym
 
 from dice_rl_TU_Vienna.dataset import load_or_create_dataset_StepsEpisodes
-from dice_rl_TU_Vienna.value import get_get_policy_value_env
 from dice_rl_TU_Vienna.wrappers import AbsorbingWrapper
 from dice_rl_TU_Vienna.plugins.stable_baselines3.policy import (
     get_TFPolicyPPO, load_or_create_model_PPO, )

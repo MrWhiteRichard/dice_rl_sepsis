@@ -3,7 +3,7 @@
 from medical_rl.libs.RL import Model
 
 from dice_rl_TU_Vienna.policy import MyTFPolicy
-from plugins.medical_rl.continuous.specs import get_observation_action_spec_sepsis_amsterdam_continuous
+from dice_rl_TU_Vienna.specs import get_observation_action_spec_continuous
 
 # ---------------------------------------------------------------- #
 
@@ -12,7 +12,7 @@ class TFPolicyMedicalRLContinuous(MyTFPolicy):
         self.model = model
 
         super().__init__(
-            *get_observation_action_spec_sepsis_amsterdam_continuous(bounds) )
+            *get_observation_action_spec_continuous(bounds, ( (382,), (), )) )
 
     def _probs(self, time_step):
         pass

@@ -4,7 +4,7 @@ import os
 
 # ---------------------------------------------------------------- #
 
-data_dir = os.path.join("data", "medical_rl")
+data_dir = os.path.join("data", "medical_rl", "sepsis_amsterdam")
 
 datasets_dir = os.path.join(data_dir, "datasets")
 policies_dir = os.path.join(data_dir, "policies")
@@ -44,5 +44,7 @@ policy_dir  = os.path.join(y, f"{hparam_str_policy}.h5")
 save_dir    = os.path.join(z, hparam_str_dataset)
 
 save_dir_images = os.path.join(outputs_dir, hparam_str_dataframe, "images")
+
+by = "steps"
 
 # ---------------------------------------------------------------- #

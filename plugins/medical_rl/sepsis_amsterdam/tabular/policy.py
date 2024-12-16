@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------- #
 
-from plugins.stable_baslines.policy import TFPolicyMaskablePPO
-from plugins.medical_rl.sepsis_amsterdam.tabular.specs import get_observation_action_spec_sepsis_amsterdam_tabular
+from dice_rl_TU_Vienna.plugins.stable_baselines3.policy import TFPolicyMaskablePPO
+from dice_rl_TU_Vienna.specs import get_observation_action_spec_tabular
 
 # ---------------------------------------------------------------- #
 
@@ -10,7 +10,7 @@ class TFPolicyMedicalRLTabular(TFPolicyMaskablePPO):
         super().__init__(
             model,
             action_masks,
-            *get_observation_action_spec_sepsis_amsterdam_tabular(bounds),
+            *get_observation_action_spec_tabular(bounds),
         )
 
 # ---------------------------------------------------------------- #

@@ -35,6 +35,7 @@ dataset = load_or_create_dataset_Dataframe(
     dataset_dir=dataset_dir,
     df=test,
     get_split=lambda df: AmsterdamFormatter().RL_split(df),
+    get_episode=lambda df, id: df[df["ID"] == id],
     observation_action_spec=observation_action_spec,
     n_pads=n_pads,
     verbosity=1,
