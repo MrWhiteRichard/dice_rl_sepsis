@@ -2,7 +2,7 @@
 
 import os
 import gymnasium as gym
-from dice_rl_TU_Vienna.estimators.get import get_gammas_2
+from dice_rl_TU_Vienna.estimators.get import get_gammas_log10
 from dice_rl_TU_Vienna.plugins.stable_baselines3.specs import get_specs_env
 
 # ---------------------------------------------------------------- #
@@ -36,7 +36,7 @@ specs = get_specs_env( gym.make("FrozenLake-v1", desc=None, map_name="4x4") )
 n_obs = specs["obs"]["max"] + 1
 n_act = specs["act"]["max"] + 1
 
-gammas = get_gammas_2()
+gammas = get_gammas_log10()
 
 projected = True
 modified = True

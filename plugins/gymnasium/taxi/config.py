@@ -2,7 +2,7 @@
 
 import os
 import gymnasium as gym
-from dice_rl_TU_Vienna.estimators.get import get_gammas_2
+from dice_rl_TU_Vienna.estimators.get import get_gammas_log10
 from plugins.gymnasium.taxi.environment import Taxi
 
 # ---------------------------------------------------------------- #
@@ -37,7 +37,7 @@ n_trajectories = 500
 max_episode_steps = 200
 seed = 0
 
-gammas = get_gammas_2()
+gammas = get_gammas_log10()
 
 projected = True
 modified = True

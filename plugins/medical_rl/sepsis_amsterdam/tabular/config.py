@@ -1,13 +1,13 @@
 # ---------------------------------------------------------------- #
 
-from dice_rl_TU_Vienna.estimators.get import get_gammas_2
+from dice_rl_TU_Vienna.estimators.get import get_gammas_log10
 
 from plugins.medical_rl.sepsis_amsterdam.config import *
 
 # ---------------------------------------------------------------- #
 # evaluation
 
-gammas = get_gammas_2()
+gammas = get_gammas_log10()
 
 projected = True
 modified = True
