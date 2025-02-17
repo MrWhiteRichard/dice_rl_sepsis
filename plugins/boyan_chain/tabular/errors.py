@@ -47,7 +47,7 @@ def get_error_path(config, estimator_name, error_name=None, **kwargs):
 
 # -------------------------------- #
 
-def create_errors_episodic(config, aux_estimates_episodic):
+def create_errors_episodic(config, auxiliary_estimates_episodic):
 
     errors = {
         estimator_name: { error_name: [] for error_name in error_names }
@@ -61,7 +61,7 @@ def create_errors_episodic(config, aux_estimates_episodic):
         estimator = estimator_type(
             dataset=config["dataset_episodic"],
             evaluation_policy=config["evaluation_policy"],
-            aux_estimates=aux_estimates_episodic,
+            auxiliary_estimates=auxiliary_estimates_episodic,
         )
 
         for gamma in gammas:
@@ -116,7 +116,7 @@ def load_errors_episodic(config):
     return errors
 
 
-def get_errors_episodic(config, aux_estimates_episodic=None):
+def get_errors_episodic(config, auxiliary_estimates_episodic=None):
     try:
         errors = load_errors_episodic(config)
 
@@ -125,15 +125,15 @@ def get_errors_episodic(config, aux_estimates_episodic=None):
         assert False
 
     except:
-        assert aux_estimates_episodic is not None
-        errors = create_errors_episodic(config, aux_estimates_episodic)
+        assert auxiliary_estimates_episodic is not None
+        errors = create_errors_episodic(config, auxiliary_estimates_episodic)
         save_errors_episodic(config, errors)
 
     return errors
 
 # ---------------------------------------------------------------- #
 
-def create_errors_continuing(config, aux_estimates_continuing):
+def create_errors_continuing(config, auxiliary_estimates_continuing):
 
     errors = {}
 
@@ -146,7 +146,7 @@ def create_errors_continuing(config, aux_estimates_continuing):
         estimator = estimator_type(
             dataset=config["dataset_episodic"],
             evaluation_policy=config["evaluation_policy"],
-            aux_estimates=aux_estimates_continuing,
+            auxiliary_estimates=auxiliary_estimates_continuing,
         )
 
         solution = estimator \

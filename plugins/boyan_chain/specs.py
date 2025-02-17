@@ -7,14 +7,13 @@ from dice_rl_TU_Vienna.specs import (
 # ---------------------------------------------------------------- #
 
 def get_observation_action_spec_boyan_chain_tabular(N):
-    bounds = 0, N, 0, 1
-    return get_observation_action_spec_tabular(bounds)
+    return get_observation_action_spec_tabular(
+        n_obs=N+1, n_act=2, )
 
 
 def get_observation_action_spec_boyan_chain_continuous(N):
-    bounds = 0, 1, 0, 1
-    shapes = (N+1,), ()
-    return get_observation_action_spec_continuous(bounds, shapes)
+    return get_observation_action_spec_continuous(
+        obs_min=0, obs_max=1, n_act=2, obs_shape=(N+1,), )
 
 
 get_observation_action_spec_boyan_chain = {

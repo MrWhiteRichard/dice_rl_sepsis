@@ -2,193 +2,109 @@
 
 from itertools import product
 
-from dice_rl_TU_Vienna.runners.neural_dual_dice_runner     import NeuralDualDiceRunner
-from dice_rl_TU_Vienna.runners.neural_gen_dice_runner      import NeuralGenDiceRunner
-from dice_rl_TU_Vienna.runners.neural_gradient_dice_runner import NeuralGradientDiceRunner
+from dice_rl_TU_Vienna.estimators.neural.neural_dual_dice     import NeuralDualDice
+from dice_rl_TU_Vienna.estimators.neural.neural_gen_dice      import NeuralGenDice
+from dice_rl_TU_Vienna.estimators.neural.neural_gradient_dice import NeuralGradientDice
 
-from dice_rl_TU_Vienna.dataset import one_hot_encode_observation
-from dice_rl_TU_Vienna.runners.aux_recorders import aux_recorder_cos_angle
+from dice_rl_TU_Vienna.utils.general import list_safe_zip
+from dice_rl_TU_Vienna.utils.bedtime import computer_sleep
 
-from plugins.boyan_chain.continuous.load import *
-
-from utils.general import list_safe_zip
-from utils.bedtime import computer_sleep
-
-# ---------------------------------------------------------------- #
-
-num_steps = 100_000
-batch_size = 64
-hidden_dims = (32,)
-regularizer_mlp = 0.0
-
-# ---------------------------------------------------------------- #
-
-seeds = [0, 1, 2, 3]
-learning_rates = [1e0, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5]
-gammas = [0.1, 0.5, 0.9]
-lams = [0.0, 0.1, 0.5, 1.0, 2.0]
+from plugins.boyan_chain.continuous.config import *
 
 # ---------------------------------------------------------------- #
 
 def run_boyan_chain_continuous(seeds, loops):
 
-    for seed in seeds:
+    for seed_ in seeds:
 
-        # episodic
-        k = "e"
-        save_dir = os.path.join(outputs_dir, hparam_str_policy, hparam_str_dataset[seed][k])
+        kind_ = "episodic"
 
-        f_exponent = 1.5
-        lam = 1.0
-
-        for learning_rate, gamma in loops["NeuralDualDice"]["episodic"]:
-            NeuralDualDiceRunner(
-                gamma=gamma,
-                num_steps=num_steps,
-                batch_size=batch_size,
-                seed=seed,
-                v_hidden_dims=hidden_dims,
-                w_hidden_dims=hidden_dims,
-                v_learning_rate=learning_rate,
-                w_learning_rate=learning_rate,
-                v_regularizer=regularizer_mlp,
-                w_regularizer=regularizer_mlp,
-                f_exponent=f_exponent,
-                dataset=dataset[seed][k],
-                dataset_spec=dataset_spec,
-                target_policy=target_policy,
-                save_dir=save_dir,
-                by=by,
-                analytical_solver=analytical_solver[k],
-                env_step_preprocessing=one_hot_encode_observation,
-                aux_recorder=aux_recorder_cos_angle,
-                aux_recorder_pbar=["cos_angle"],
+        for learning_rate_, gamma_ in loops.get("NeuralDualDice", {}).get(kind_, []):
+            estimator = NeuralDualDice(
+                gamma_, p,
+                seed_, batch_size,
+                learning_rate_, hidden_dimensions,
+                obs_min, obs_max, n_act, obs_shape,
+                dataset[seed_][kind_], preprocess_obs, preprocess_act, preprocess_rew,
+                dir[seed_][kind_], get_get_recordings(gamma_, kind_),
             )
+            estimator.evaluate_loop(n_steps, verbosity, pbar_keys)
 
-        for learning_rate, gamma in loops["NeuralGenDice"]["episodic"]:
-            NeuralGenDiceRunner(
-                gamma=gamma,
-                num_steps=num_steps,
-                batch_size=batch_size,
-                seed=seed,
-                v_hidden_dims=hidden_dims,
-                w_hidden_dims=hidden_dims,
-                v_learning_rate=learning_rate,
-                w_learning_rate=learning_rate,
-                u_learning_rate=learning_rate,
-                v_regularizer=regularizer_mlp,
-                w_regularizer=regularizer_mlp,
-                lam=lam,
-                dataset=dataset[seed][k],
-                dataset_spec=dataset_spec,
-                target_policy=target_policy,
-                save_dir=save_dir,
-                by=by,
-                analytical_solver=analytical_solver[k],
-                env_step_preprocessing=one_hot_encode_observation,
-                aux_recorder=aux_recorder_cos_angle,
-                aux_recorder_pbar=["cos_angle"],
+        for learning_rate_, gamma_ in loops.get("NeuralGenDice", {}).get(kind_, []):
+            estimator = NeuralGenDice(
+                gamma_, lamda[kind_],
+                seed_, batch_size,
+                learning_rate_, hidden_dimensions,
+                obs_min, obs_max, n_act, obs_shape,
+                dataset[seed_][kind_], preprocess_obs, preprocess_act, preprocess_rew,
+                dir[seed_][kind_], get_get_recordings(gamma_, kind_),
             )
+            estimator.evaluate_loop(n_steps, verbosity, pbar_keys)
 
-        for learning_rate, gamma in loops["NeuralGradientDice"]["episodic"]:
-            NeuralGradientDiceRunner(
-                gamma=gamma,
-                num_steps=num_steps,
-                batch_size=batch_size,
-                seed=seed,
-                v_hidden_dims=hidden_dims,
-                w_hidden_dims=hidden_dims,
-                v_learning_rate=learning_rate,
-                w_learning_rate=learning_rate,
-                u_learning_rate=learning_rate,
-                v_regularizer=regularizer_mlp,
-                w_regularizer=regularizer_mlp,
-                lam=lam,
-                dataset=dataset[seed][k],
-                dataset_spec=dataset_spec,
-                target_policy=target_policy,
-                save_dir=save_dir,
-                by=by,
-                analytical_solver=analytical_solver[k],
-                env_step_preprocessing=one_hot_encode_observation,
-                aux_recorder=aux_recorder_cos_angle,
-                aux_recorder_pbar=["cos_angle"],
+        for learning_rate_, gamma_ in loops.get("NeuralGradientDice", {}).get(kind_, []):
+            estimator = NeuralGradientDice(
+                gamma_, lamda[kind_],
+                seed_, batch_size,
+                learning_rate_, hidden_dimensions,
+                obs_min, obs_max, n_act, obs_shape,
+                dataset[seed_][kind_], preprocess_obs, preprocess_act, preprocess_rew,
+                dir[seed_][kind_], get_get_recordings(gamma_, kind_),
             )
+            estimator.evaluate_loop(n_steps, verbosity, pbar_keys)
 
-        # continuing
-        k = "c"
-        save_dir = os.path.join(outputs_dir, hparam_str_policy, hparam_str_dataset[seed][k])
+        kind_ = "continuing"
 
-        for learning_rate, lam in loops["NeuralGenDice"]["continuing"]:
-            NeuralGenDiceRunner(
-                gamma=1.0,
-                num_steps=num_steps,
-                batch_size=batch_size,
-                seed=seed,
-                v_hidden_dims=hidden_dims,
-                w_hidden_dims=hidden_dims,
-                v_learning_rate=learning_rate,
-                w_learning_rate=learning_rate,
-                u_learning_rate=learning_rate,
-                v_regularizer=regularizer_mlp,
-                w_regularizer=regularizer_mlp,
-                lam=lam,
-                dataset=dataset[seed][k],
-                dataset_spec=dataset_spec,
-                target_policy=target_policy,
-                save_dir=save_dir,
-                by=by,
-                analytical_solver=analytical_solver[k],
-                env_step_preprocessing=one_hot_encode_observation,
-                aux_recorder=aux_recorder_cos_angle,
-                aux_recorder_pbar=["cos_angle"],
+        for learning_rate_, lamda_ in loops.get("NeuralGenDice", {}).get(kind_, []):
+            estimator = NeuralGradientDice(
+                gamma[kind_], lamda_,
+                seed_, batch_size,
+                learning_rate_, hidden_dimensions,
+                obs_min, obs_max, n_act, obs_shape,
+                dataset[seed_][kind_], preprocess_obs, preprocess_act, preprocess_rew,
+                dir[seed_][kind_], get_get_recordings(gamma_, kind_),
             )
+            estimator.evaluate_loop(n_steps, verbosity, pbar_keys)
 
-        for learning_rate, lam in loops["NeuralGradientDice"]["continuing"]:
-            NeuralGradientDiceRunner(
-                gamma=1.0,
-                num_steps=num_steps,
-                batch_size=batch_size,
-                seed=seed,
-                v_hidden_dims=hidden_dims,
-                w_hidden_dims=hidden_dims,
-                v_learning_rate=learning_rate,
-                w_learning_rate=learning_rate,
-                u_learning_rate=learning_rate,
-                v_regularizer=regularizer_mlp,
-                w_regularizer=regularizer_mlp,
-                lam=lam,
-                dataset=dataset[seed][k],
-                dataset_spec=dataset_spec,
-                target_policy=target_policy,
-                save_dir=save_dir,
-                by=by,
-                analytical_solver=analytical_solver[k],
-                env_step_preprocessing=one_hot_encode_observation,
-                aux_recorder=aux_recorder_cos_angle,
-                aux_recorder_pbar=["cos_angle"],
+        for learning_rate_, lamda_ in loops.get("NeuralGradientDice", {}).get(kind_, []):
+            estimator = NeuralGradientDice(
+                gamma[kind_], lamda_,
+                seed_, batch_size,
+                learning_rate_, hidden_dimensions,
+                obs_min, obs_max, n_act, obs_shape,
+                dataset[seed_][kind_], preprocess_obs, preprocess_act, preprocess_rew,
+                dir[seed_][kind_], get_get_recordings(gamma_, kind_),
             )
+            estimator.evaluate_loop(n_steps, verbosity, pbar_keys)
 
 # ---------------------------------------------------------------- #
 
 # run_boyan_chain_continuous(
 #     seeds=[0],
 #     loops={
-#         "NeuralDualDice":      { "episodic": product(learning_rates, gammas), },
-#         "NeuralGenDice":       { "episodic": product(learning_rates, gammas), "continuing": product(learning_rates, lams) },
-#         "NeuralGradientDice":  { "episodic": product(learning_rates, gammas), "continuing": product(learning_rates, lams) },
+#         "NeuralDualDice":      { "episodic": product(learning_rates, gamma["episodic"]), },
+#         "NeuralGenDice":       { "episodic": product(learning_rates, gamma["episodic"]), "continuing": product(learning_rates, lamda["continuing"]) },
+#         "NeuralGradientDice":  { "episodic": product(learning_rates, gamma["episodic"]), "continuing": product(learning_rates, lamda["continuing"]) },
 #     }
 # )
 
 # run_boyan_chain_continuous(
 #     seeds=[1, 2, 3],
 #     loops={
-#         "NeuralDualDice":      { "episodic": list_safe_zip([0.01, 0.001, 0.001], gammas), },
-#         "NeuralGenDice":       { "episodic": list_safe_zip([0.01, 0.01, 0.01], gammas), "continuing": list_safe_zip([0.01], [1.0]) },
-#         "NeuralGradientDice":  { "episodic": list_safe_zip([0.01, 0.01, 0.01], gammas), "continuing": list_safe_zip([0.01], [1.0]) },
+#         "NeuralDualDice":      { "episodic": list_safe_zip([0.01, 0.001, 0.001], gamma["episodic"]), },
+#         "NeuralGenDice":       { "episodic": list_safe_zip([0.01, 0.01,  0.01],  gamma["episodic"]), "continuing": list_safe_zip([0.01], [1.0]) },
+#         "NeuralGradientDice":  { "episodic": list_safe_zip([0.01, 0.01,  0.01],  gamma["episodic"]), "continuing": list_safe_zip([0.01], [1.0]) },
 #     }
 # )
 
-computer_sleep()
+run_boyan_chain_continuous(
+    seeds=[0],
+    loops={
+        "NeuralDualDice":      { "episodic": [(0.01, 0.99)], },
+        "NeuralGenDice":       { "episodic": [], "continuing": [], },
+        "NeuralGradientDice":  { "episodic": [], "continuing": [], },
+    }
+)
+
+# computer_sleep()
 
 # ---------------------------------------------------------------- #

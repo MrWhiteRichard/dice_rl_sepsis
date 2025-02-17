@@ -1,41 +1,51 @@
 # ---------------------------------------------------------------- #
 
+from plugins.boyan_chain.config import *
+
 import numpy as np
 
-import os
-
 # ---------------------------------------------------------------- #
+# dataset
 
-data_dir = os.path.join("data", "boyan_chain")
-
-datasets_dir = os.path.join(data_dir, "datasets")
-save_dir     = os.path.join(data_dir, "outputs")
-
-save_dir_images = os.path.join(save_dir, "images", "tabular")
-
-# ---------------------------------------------------------------- #
-
-seeds = [0, 1, 2, 3]
-num_experience = 100_000
-p = 0.1
 Ns = [ 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, ]
 
-tabular_continuous = "tabular"
+# ---------------------------------------------------------------- #
+# policy
+
+get_act_evaluation = lambda obs: 1 - int( np.random.random() < prob )
+
+# ---------------------------------------------------------------- #
+# evaluation
 
 gammas = np.array([0.9, 0.99, 0.999, 0.9999])
 
 projected = True
 modified = True
-lam = 1e-6
+lamda = 1e-6
 
-K = ["e", "c"]
-kind = { "e": "episodic", "c": "continuing", }
-
-# ---------------------------------------------------------------- #
-
-get_act = lambda obs: 1 - int( np.random.random() < p )
+n_obs = { N: N + 1 for N in Ns }
 
 # ---------------------------------------------------------------- #
+# plotting
+
+labels_OnPE = ["OnPE evaluation"]
+labels_VAFE = ["TabularVafe"]
+labels_DICE = ["TabularDice", "TabularDualDice", "TabularGradientDice"]
+labels_ANAL = ["analytical"]
+
+colors_OnPE = ["grey"]
+colors_VAFE = ["blue"]
+colors_DICE = ["orange", "green", "red"]
+colors_ANAL = ["black"]
+
+markers_OnPE = ["^"]
+markers_VAFE = ["1"]
+markers_DICE = ["2", "3", "4"]
+markers_ANAL = ["."]
+
+labels_approx  = labels_OnPE  + labels_VAFE  + labels_DICE
+colors_approx  = colors_OnPE  + colors_VAFE  + colors_DICE
+markers_approx = markers_OnPE + markers_VAFE + markers_DICE
 
 std_girth = 0.5
 alpha = 0.1

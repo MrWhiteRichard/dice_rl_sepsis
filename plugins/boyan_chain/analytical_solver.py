@@ -25,10 +25,10 @@ class AnalyticalSolverBoyanChain(AnalyticalSolver):
         self.policy = TFPolicyBoyanChain(N=N, p=p, tabular_continuous="tabular")
         self.env = get_env(seed=None, N=N, kind=kind)
 
-        num_obs = self.N + 1
+        n_obs = self.N + 1
         n_act = 2
 
-        super().__init__(num_obs, n_act)
+        super().__init__(n_obs, n_act)
 
     def assert_gamma(self, gamma):
         if self.kind == "episodic":   assert 0 < gamma < 1
@@ -36,7 +36,7 @@ class AnalyticalSolverBoyanChain(AnalyticalSolver):
 
     def get_index(self, obs, act):
         if self.enumerate_by == "act": return obs * self.n_act + act
-        if self.enumerate_by == "obs": return obs + self.num_obs * act
+        if self.enumerate_by == "obs": return obs + self.n_obs * act
 
     def get_distributions(self):
         d0 = self.get_d0()
@@ -56,17 +56,17 @@ class AnalyticalSolverBoyanChain(AnalyticalSolver):
 
         obs_next = self.env.unwrapped.get_obs_next(obs, act)
 
-        probs = np.identity(self.num_obs)[obs_next]
+        probs = np.identity(self.n_obs)[obs_next]
 
         if self.kind == "continuing" and obs_next == 0:
-            probs = np.ones(self.num_obs) / self.num_obs
+            probs = np.ones(self.n_obs) / self.n_obs
 
         return probs
 
     def get_d0(self):
-        probs_obs_init = np.ones([self.num_obs, self.n_act]) / self.num_obs
+        probs_obs_init = np.ones([self.n_obs, self.n_act]) / self.n_obs
 
-        obs_init = np.arange(0, self.num_obs)
+        obs_init = np.arange(0, self.n_obs)
         probs_act_init = self.get_act_probs(obs_init)
 
         d0 = np.array(probs_obs_init * probs_act_init)
@@ -86,11 +86,11 @@ class AnalyticalSolverBoyanChain(AnalyticalSolver):
     def get_P(self):
         P = np.zeros([self.dim, self.dim])
 
-        for obs in range(self.num_obs):
+        for obs in range(self.n_obs):
             for act in range(self.n_act):
                 i = self.get_index(obs, act)
 
-                for obs_next, prob_obs_next in zip( range(self.num_obs), self.get_obs_next_probs(obs, act) ):
+                for obs_next, prob_obs_next in zip( range(self.n_obs), self.get_obs_next_probs(obs, act) ):
                     for act_next, prob_act_next in zip( range(self.n_act), self.get_act_probs(obs_next) ):
                         j = self.get_index(obs_next, act_next)
 
@@ -119,7 +119,7 @@ class AnalyticalSolverBoyanChain(AnalyticalSolver):
             i = self.get_index(1, 1)
             r[i] = -2
 
-        for obs in range(2, self.num_obs):
+        for obs in range(2, self.n_obs):
             for act in range(self.n_act):
                 i = self.get_index(obs, act)
                 r[i] = -3
