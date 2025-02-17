@@ -1,60 +1,77 @@
 # ---------------------------------------------------------------- #
 
-from dice_rl_TU_Vienna.plot.continuous import get_plot_logs as get_plot_logs_general
+import random
+
+from dice_rl_TU_Vienna.plot.continuous import \
+    get_logs_and_plot as get_logs_and_plot_general
+from dice_rl_TU_Vienna.utils.general import dict_to_str
+
+from plugins.gymnasium.cartpole.config import *
 
 # ---------------------------------------------------------------- #
 
-def get_plot_logs(
+def get_logs_and_plot(
         get_policy_value,
         #
-        outputs_dir,
-        hparam_str_policy, hparam_str_dataset,
-        estimator_name, hparam_str_evaluation,
+        hyperparameters_evaluation,
+        hyperparameters_dataset,
         #
-        ylim_1=None, ylim_2=None, ylim_3=None,
-        n_ma_1=None, n_ma_2=None, n_ma_3=None,
+        ylims=None,
+        n_samples_moving_average=None,
         #
-        save_dir=None, file_name=None,
-        hparams_title=None,
+        dir_save=None,
+        verbosity=0,
     ):
 
-    def get_suptitle(gammas):
-        return "Cartpole"
+    hyperparameters_policy = None
 
-    def get_pv_baselines(gamma):
-        pv_b = get_policy_value["b"](gamma)
-        pv_e = get_policy_value["e"](gamma)
+    suptitle = f"Cartpole" + "\n" + (
+        dict_to_str( random.choice(hyperparameters_evaluation), blacklist=["gamma"], )
+    )
+    titles = [
+        {
+            "pv": f"gamma={dictionary['gamma']}"
+        }
+            for dictionary in hyperparameters_evaluation
+    ]
+    hlines = [
+        {
+            "pv": [
+                {
+                    "y": get_policy_value["behavior"](dictionary['gamma']),
+                    "label": "OnPE behavior",
+                    "linestyle": "--",
+                },
+                {
+                    "y": get_policy_value["evaluation"](dictionary['gamma']),
+                    "label": "OnPE evaluation",
+                    "linestyle": ":",
+                },
+            ]
+        }
+            for dictionary in hyperparameters_evaluation
+    ]
+    append_extras = None
 
-        return [
-            {
-                "label": "OnPE behavior",
-                "value": pv_b,
-                "linestyle": "dashed",
-            },
-            {
-                "label": "OnPE evaluation",
-                "value": pv_e,
-                "linestyle": "dotted",
-            },
-        ]
+    file_name = suptitle.replace("\n", "; ")
 
-    error_tags = []
-    plot_types = None
-
-    return get_plot_logs_general(
-        get_suptitle, get_pv_baselines,
+    return get_logs_and_plot_general(
+        dir_base,
         #
-        outputs_dir,
-        hparam_str_policy, hparam_str_dataset,
-        estimator_name, hparam_str_evaluation,
+        hyperparameters_evaluation,
+        hyperparameters_policy,
+        hyperparameters_dataset,
         #
-        error_tags, plot_types,
+        suptitle,
+        titles,
+        ylims,
+        n_samples_moving_average,
+        hlines,
         #
-        ylim_1, ylim_2, ylim_3,
-        n_ma_1, n_ma_2, n_ma_3,
+        append_extras,
         #
-        save_dir, file_name,
-        hparams_title,
+        dir_save, file_name,
+        verbosity,
     )
 
 # ---------------------------------------------------------------- #

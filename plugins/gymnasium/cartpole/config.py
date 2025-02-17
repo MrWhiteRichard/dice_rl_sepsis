@@ -2,38 +2,109 @@
 
 import os
 
+import gymnasium as gym
+
+from dice_rl_TU_Vienna.get_recordings import get_recordings_cos_angle
+from dice_rl_TU_Vienna.plugins.stable_baselines3.specs import get_specs_env
+
+from plugins.gymnasium.cartpole.dataset import get_dataset_cartpole
+
 # ---------------------------------------------------------------- #
 
-data_dir = os.path.join("data", "dice_rl", "cartpole")
+kinds = [ "behavior", "evaluation", ]
 
-datasets_dir = os.path.join(data_dir, "datasets")
-policies_dir = os.path.join(data_dir, "policies")
-outputs_dir  = os.path.join(data_dir, "outputs")
-
-save_dir_images = os.path.join(outputs_dir, "images")
-
-by = "episodes"
-
-K = ["b", "e"]
-names = { "b": "behavior", "e": "evaluation", }
-
-total_timesteps = { "b": 10_000, "e": 100_000, }
-num_trajectory = 500
-max_trajectory_length = 200
-seed = 0
-
-hparam_str_policy = { k: f"total_timesteps={total_timesteps[k]}" for k in K }
-
-hparam_str_dataset = "_".join([
-    hparam_str_policy["b"],
-    f"{num_trajectory=}", f"{max_trajectory_length=}", f"{seed=}",
-])
-
-model_dir = {
-    k: os.path.join(policies_dir, hparam_str_policy[k])
-        for k in K
+id_policy = {
+    "behavior": "2025-02-06T12:51:54.519095",
+    "evaluation": "2025-02-06T12:52:22.614772",
 }
-dataset_dir = os.path.join(datasets_dir, hparam_str_dataset)
-save_dir    = os.path.join(outputs_dir,  hparam_str_policy["e"], hparam_str_dataset)
+id_dataset = {
+    "behavior": "2025-02-06T14:56:13.508204",
+    "evaluation": "2025-02-06T14:56:23.202427",
+}
+
+# ---------------------------------------------------------------- #
+
+dir_base = os.path.join("data", "gymnasium", "cartpole")
+dir_images = os.path.join(dir_base, "images")
+
+dir_policy = {
+    kind: os.path.join(dir_base, id_policy[kind])
+        for kind in kinds
+}
+dir_dataset = {
+    kind: os.path.join(dir_policy[kind], id_dataset[kind])
+        for kind in kinds
+}
+
+# ---------------------------------------------------------------- #
+# policy
+
+total_timesteps = { "behavior": 10_000, "evaluation": 100_000, }
+n_trajectories = 500
+max_episode_steps = 200
+
+# ---------------------------------------------------------------- #
+# evaluation
+
+# -------------------------------- #
+
+env = gym.make('CartPole-v0')
+specs = get_specs_env(env)
+assert specs["act"]["min"] == 0
+assert specs["act"]["shape"] == ()
+
+# -------------------------------- #
+
+gammas = [0.1, 0.5, 0.9]
+p = 1.5
+lamda = 1.0
+
+seed = 0
+batch_size = 64
+
+learning_rates = [1e0, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5]
+hidden_dimensions = [32]
+
+obs_min   = specs["obs"]["min"]
+obs_max   = specs["obs"]["max"]
+n_act     = specs["act"]["max"] + 1
+obs_shape = specs["obs"]["shape"]
+
+dataset = get_dataset_cartpole(dir_dataset["behavior"], dir_policy["evaluation"])
+preprocess_obs = None
+preprocess_act = None
+preprocess_rew = None
+
+dir = dir_dataset["behavior"]
+get_recordings = get_recordings_cos_angle
+other_hyperparameters = { "id_policy": id_policy["evaluation"], }
+
+n_steps = 100_000
+verbosity = 1
+pbar_keys = None
+
+# ---------------------------------------------------------------- #
+# plotting
+
+names = ["NeuralDualDice", "NeuralGradientDice", "NeuralGenDice"]
+
+hyperparameters_evaluation = {
+    (0.1, "NeuralDualDice"):      { "name": "NeuralDualDice", "gamma": 0.1, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "p": 1.5, },
+    (0.5, "NeuralDualDice"):      { "name": "NeuralDualDice", "gamma": 0.5, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "p": 1.5, },
+    (0.9, "NeuralDualDice"):      { "name": "NeuralDualDice", "gamma": 0.9, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "p": 1.5, },
+    (0.1, "NeuralGradientlDice"): { "name": "NeuralDualDice", "gamma": 0.1, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "lamda": 1.0, },
+    (0.5, "NeuralGradientlDice"): { "name": "NeuralDualDice", "gamma": 0.5, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "lamda": 1.0, },
+    (0.9, "NeuralGradientlDice"): { "name": "NeuralDualDice", "gamma": 0.9, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "lamda": 1.0, },
+    (0.1, "NeuralGenlDice"):      { "name": "NeuralDualDice", "gamma": 0.1, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "lamda": 1.0, },
+    (0.5, "NeuralGenlDice"):      { "name": "NeuralDualDice", "gamma": 0.5, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "lamda": 1.0, },
+    (0.9, "NeuralGenlDice"): None,
+}
+
+alpha = 0.1
+n_ma = 16
+markevery = 100
+
+colors = ["green", "red", "cyan"]
+markers = ["3", "4", "+"]
 
 # ---------------------------------------------------------------- #
