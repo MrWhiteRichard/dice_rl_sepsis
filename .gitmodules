@@ -13,3 +13,9 @@
 [submodule "sepsis_mimic_iv"]
 	path = sepsis_mimic_iv
 	url = https://github.com/lorenzkap/sepsis_mimic_iv.git
+[submodule "infinite-horizon-off-policy-estimation"]
+	path = infinite-horizon-off-policy-estimation
+	url = https://github.com/zt95/infinite-horizon-off-policy-estimation.git
+[submodule "infinite_horizon_off_policy_estimation"]
+	path = infinite_horizon_off_policy_estimation
+	url = https://github.com/MrWhiteRichard/infinite_horizon_off_policy_estimation.git
