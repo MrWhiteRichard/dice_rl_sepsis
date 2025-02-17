@@ -2,7 +2,8 @@
 
 from dice_rl_TU_Vienna.latex import latex_gamma, latex_lambda
 
-from dice_rl_TU_Vienna.plot.continuous import get_plot_logs as get_plot_logs_general
+from dice_rl_TU_Vienna.plot.continuous import (
+    get_logs_and_plot as get_logs_and_plot_general, )
 
 # ---------------------------------------------------------------- #
 
@@ -45,7 +46,7 @@ def get_plot_logs(
         "mlp-regularizer",
     ]
 
-    return get_plot_logs_general(
+    return get_logs_and_plot_general(
         get_suptitle, get_pv_baselines,
         #
         outputs_dir,

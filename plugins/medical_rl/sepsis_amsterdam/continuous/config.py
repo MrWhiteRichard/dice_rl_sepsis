@@ -2,49 +2,41 @@
 
 import os
 
+import numpy as np
+import pandas as pd
+
+from dice_rl_TU_Vienna.get_recordings import get_recordings_cos_angle
+
+from plugins.medical_rl.sepsis_amsterdam.config import *
+
 # ---------------------------------------------------------------- #
+# evaluation
 
-data_dir = os.path.join("data", "medical_rl", "sepsis_amsterdam")
+gamma = 0.9
+p = 1.5
+lamda = 1.0
 
-datasets_dir = os.path.join(data_dir, "datasets")
-policies_dir = os.path.join(data_dir, "policies")
-outputs_dir  = os.path.join(data_dir, "outputs")
-
-train_size = 0.4
-valid_size = 0.1
-test_size = 0.5
 seed = 42
+batch_size = 1024
+learning_rates = [1e0, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5]
+hidden_dimensionss = [ [32], [64], [128], [256], ]
 
-n_pads = 1
+obs_min = np.load( os.path.join(dir_policy["continuous"], "obs_min.npy") )
+obs_max = np.load( os.path.join(dir_policy["continuous"], "obs_max.npy") )
+n_act = 5
+obs_shape = (382,)
 
-policy_n_neurons = 1024
-policy_learning_rate = 0.0001
-policy_batch_size = 512
-policy_gamma = 0.99
+dataset = pd.read_parquet(
+    os.path.join(dir_dataset["continuous"], "dataset.parquet")
+)
+preprocess_obs = None
+preprocess_act = None
+preprocess_rew = None
+dir = dir_policy["continuous"]
+get_recordings = get_recordings_cos_angle
 
-hparam_str_dataframe = "_".join([
-    f"split={train_size, valid_size, test_size}", f"{seed=}",
-])
-hparam_str_dataset = "_".join([
-    f"{n_pads=}",
-])
-hparam_str_policy = "_".join([
-    f"n_neurons={policy_n_neurons}",
-    f"learning_rate={policy_learning_rate}",
-    f"batch_size={policy_batch_size}",
-    f"gamma={policy_gamma}",
-])
-
-x = os.path.join(datasets_dir, hparam_str_dataframe)
-y = os.path.join(policies_dir, hparam_str_dataframe)
-z = os.path.join(outputs_dir,  hparam_str_dataframe, hparam_str_policy)
-
-dataset_dir = os.path.join(x, hparam_str_dataset)
-policy_dir  = os.path.join(y, f"{hparam_str_policy}.h5")
-save_dir    = os.path.join(z, hparam_str_dataset)
-
-save_dir_images = os.path.join(outputs_dir, hparam_str_dataframe, "images")
-
-by = "steps"
+n_steps = 500_000
+verbosity = 1
+pbar_keys = None
 
 # ---------------------------------------------------------------- #
