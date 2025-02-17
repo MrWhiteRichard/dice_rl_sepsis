@@ -9,17 +9,17 @@ from dice_rl_TU_Vienna.estimators.tabular.analytical_solver import AnalyticalSol
 # ---------------------------------------------------------------- #
 
 class AnalyticalSolverFrozenLake(AnalyticalSolver):
-    def __init__(self, model, transitions):
-        self.model = model
+    def __init__(self, policy, transitions):
+        self.policy = policy
         self.transitions = transitions
 
-        num_obs = 16
+        n_obs = 16
         n_act = 4
 
-        super().__init__(num_obs, n_act)
+        super().__init__(n_obs, n_act)
 
     def get_act_probs(self, obs):
-        distribution = self.model.policy.get_distribution( torch.tensor([[obs]]) )
+        distribution = self.policy.policy.get_distribution( torch.tensor([[obs]]) )
         actions = torch.arange(4)
         logits = distribution.log_prob(actions).detach().numpy()
         probs = np.exp(logits)

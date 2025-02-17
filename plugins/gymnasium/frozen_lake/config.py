@@ -1,46 +1,68 @@
 # ---------------------------------------------------------------- #
 
 import os
+import gymnasium as gym
+from dice_rl_TU_Vienna.estimators.get import get_gammas_2
+from dice_rl_TU_Vienna.plugins.stable_baselines3.specs import get_specs_env
 
 # ---------------------------------------------------------------- #
 
-K = ["d", "s"]
-names = { "d": "deterministic", "s": "stochastic", }
-is_slippery = { "d": False, "s": True, }
+kinds = ["deterministic", "stochastic"]
+ups = ["uniform", "policy"]
+bys = ["by_samples", "by_episodes"]
+is_slippery = { "deterministic": False, "stochastic": True, }
 
-data_dir = os.path.join("data", "dice_rl", "frozenlake")
+id_env = {
+    "deterministic": "2025-02-07T14:39:02.410219",
+    "stochastic": "2025-02-07T14:40:35.834973",
+}
 
-datasets_dir = os.path.join(data_dir, "datasets")
-policies_dir = os.path.join(data_dir, "policies")
-outputs_dir  = os.path.join(data_dir, "outputs")
+# ---------------------------------------------------------------- #
 
-save_dir_images = os.path.join(outputs_dir, "images")
+dir_base = os.path.join("data", "gymnasium", "frozenlake")
+dir_images = os.path.join(dir_base, "images")
+
+dir_env = { kind: os.path.join(dir_base, id_env[kind]) for kind in kinds }
+
+# ---------------------------------------------------------------- #
 
 total_timesteps = 100_000
-num_experience = 100_000
+n_samples = 100_000
+n_trajectories = 500
+max_episode_steps = 200
 seed = 0
 
-num_trajectory = 1_000
-max_trajectory_length = 200
+specs = get_specs_env( gym.make("FrozenLake-v1", desc=None, map_name="4x4") )
+n_obs = specs["obs"]["max"] + 1
+n_act = specs["act"]["max"] + 1
 
-hparam_str_dataset = {
-    k: f"{num_experience=}_{seed=}_{is_slippery=}"
-        for k, is_slippery in zip(K, [False, True])
-}
+gammas = get_gammas_2()
 
-model_dir = {
-    k: os.path.join(policies_dir, f"{total_timesteps=}_{is_slippery=}")
-        for k, is_slippery in zip(K, [False, True])
-}
+projected = True
+modified = True
+lamda = 1e-6
 
-dataset_dir = {
-    k: os.path.join(datasets_dir, hparam_str_dataset[k])
-        for k in K
-}
+# ---------------------------------------------------------------- #
+# plotting
 
-aux_estimates_dir = {
-    k: os.path.join(outputs_dir, f"{is_slippery=}")
-        for k, is_slippery in zip(K, [False, True])
-}
+env_title = "Frozen Lake"
+
+colors_OnPE = ["grey"]
+colors_VAFE = ["blue"]
+colors_DICE = ["orange", "green", "red"]
+colors_OffPE = colors_VAFE + colors_DICE
+color_ref = "black"
+
+markers_OnPE = ["^"]
+markers_VAFE = ["1"]
+markers_DICE = ["2", "3", "4"]
+markers_OffPE = markers_VAFE + markers_DICE
+marker_ref = "."
+
+colors = colors_OnPE + colors_OffPE + [color_ref]
+colors_lim = ["grey", "orange", "black"]
+
+markers = markers_OnPE + markers_OffPE + [marker_ref]
+markers_lim = ["^", "2", "."]
 
 # ---------------------------------------------------------------- #
