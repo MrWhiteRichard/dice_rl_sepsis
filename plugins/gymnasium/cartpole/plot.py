@@ -4,7 +4,7 @@ import random
 
 from dice_rl_TU_Vienna.plot.continuous import \
     get_logs_and_plot as get_logs_and_plot_general
-from dice_rl_TU_Vienna.utils.general import dict_to_str
+from dice_rl_TU_Vienna.utils.general import dict_to_str, flatten_dict
 
 from plugins.gymnasium.cartpole.config import *
 
@@ -14,7 +14,7 @@ def get_logs_and_plot(
         get_policy_value,
         #
         hyperparameters_evaluation,
-        hyperparameters_dataset,
+        hyperparameters_dict,
         #
         ylims=None,
         n_samples_moving_average=None,
@@ -23,10 +23,8 @@ def get_logs_and_plot(
         verbosity=0,
     ):
 
-    hyperparameters_policy = None
-
     suptitle = f"Cartpole" + "\n" + (
-        dict_to_str( random.choice(hyperparameters_evaluation), blacklist=["gamma"], )
+        dict_to_str( flatten_dict( random.choice(hyperparameters_evaluation), ), blacklist=["gamma", "id_policy"], )
     )
     titles = [
         {
@@ -59,8 +57,7 @@ def get_logs_and_plot(
         dir_base,
         #
         hyperparameters_evaluation,
-        hyperparameters_policy,
-        hyperparameters_dataset,
+        hyperparameters_dict,
         #
         suptitle,
         titles,

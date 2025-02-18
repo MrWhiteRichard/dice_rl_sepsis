@@ -8,9 +8,9 @@ from stable_baselines3 import PPO
 
 from dice_rl_TU_Vienna.plugins.stable_baselines3.dataset import get_probs
 
-from plugins.gymnasium.cartpole.config import n_act
-
 # ---------------------------------------------------------------- #
+
+n_act = 2
 
 def get_dataset_cartpole(dir_dataset, dir_policy):
     dataset = pd.read_parquet( os.path.join(dir_dataset, "dataset.parquet") )

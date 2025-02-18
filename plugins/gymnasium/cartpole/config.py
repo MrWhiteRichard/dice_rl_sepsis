@@ -89,15 +89,15 @@ pbar_keys = None
 names = ["NeuralDualDice", "NeuralGradientDice", "NeuralGenDice"]
 
 hyperparameters_evaluation = {
-    (0.1, "NeuralDualDice"):      { "name": "NeuralDualDice", "gamma": 0.1, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "p": 1.5, },
-    (0.5, "NeuralDualDice"):      { "name": "NeuralDualDice", "gamma": 0.5, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "p": 1.5, },
-    (0.9, "NeuralDualDice"):      { "name": "NeuralDualDice", "gamma": 0.9, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "p": 1.5, },
-    (0.1, "NeuralGradientlDice"): { "name": "NeuralDualDice", "gamma": 0.1, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "lamda": 1.0, },
-    (0.5, "NeuralGradientlDice"): { "name": "NeuralDualDice", "gamma": 0.5, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "lamda": 1.0, },
-    (0.9, "NeuralGradientlDice"): { "name": "NeuralDualDice", "gamma": 0.9, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "lamda": 1.0, },
-    (0.1, "NeuralGenlDice"):      { "name": "NeuralDualDice", "gamma": 0.1, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "lamda": 1.0, },
-    (0.5, "NeuralGenlDice"):      { "name": "NeuralDualDice", "gamma": 0.5, "seed": seed, "batch_size": 64, "learning_rate": 0.001, "hidden_dimensions": [32], "lamda": 1.0, },
-    (0.9, "NeuralGenlDice"): None,
+    (0.1, "NeuralDualDice"):     { "name": "NeuralDualDice",     "gamma": 0.1, "seed": seed, "batch_size": batch_size, "learning_rate": 0.001, "hidden_dimensions": hidden_dimensions, "other": { "id_policy": id_policy["evaluation"], "p": p, }, },
+    (0.5, "NeuralDualDice"):     { "name": "NeuralDualDice",     "gamma": 0.5, "seed": seed, "batch_size": batch_size, "learning_rate": 0.001, "hidden_dimensions": hidden_dimensions, "other": { "id_policy": id_policy["evaluation"], "p": p, }, },
+    (0.9, "NeuralDualDice"):     { "name": "NeuralDualDice",     "gamma": 0.9, "seed": seed, "batch_size": batch_size, "learning_rate": 0.001, "hidden_dimensions": hidden_dimensions, "other": { "id_policy": id_policy["evaluation"], "p": p, }, },
+    (0.1, "NeuralGradientDice"): { "name": "NeuralGradientDice", "gamma": 0.1, "seed": seed, "batch_size": batch_size, "learning_rate": 0.001, "hidden_dimensions": hidden_dimensions, "other": { "id_policy": id_policy["evaluation"], "lamda": lamda, }, },
+    (0.5, "NeuralGradientDice"): { "name": "NeuralGradientDice", "gamma": 0.5, "seed": seed, "batch_size": batch_size, "learning_rate": 0.001, "hidden_dimensions": hidden_dimensions, "other": { "id_policy": id_policy["evaluation"], "lamda": lamda, }, },
+    (0.9, "NeuralGradientDice"): { "name": "NeuralGradientDice", "gamma": 0.9, "seed": seed, "batch_size": batch_size, "learning_rate": 0.001, "hidden_dimensions": hidden_dimensions, "other": { "id_policy": id_policy["evaluation"], "lamda": lamda, }, },
+    (0.1, "NeuralGenDice"):      { "name": "NeuralGenDice",      "gamma": 0.1, "seed": seed, "batch_size": batch_size, "learning_rate": 0.001, "hidden_dimensions": hidden_dimensions, "other": { "id_policy": id_policy["evaluation"], "lamda": lamda, }, },
+    (0.5, "NeuralGenDice"):      { "name": "NeuralGenDice",      "gamma": 0.5, "seed": seed, "batch_size": batch_size, "learning_rate": 0.001, "hidden_dimensions": hidden_dimensions, "other": { "id_policy": id_policy["evaluation"], "lamda": lamda, }, },
+    (0.9, "NeuralGenDice"): None,
 }
 
 alpha = 0.1
