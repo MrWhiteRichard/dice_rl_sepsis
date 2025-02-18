@@ -96,15 +96,6 @@ def run_boyan_chain_continuous(seeds, loops):
 #     }
 # )
 
-run_boyan_chain_continuous(
-    seeds=[0],
-    loops={
-        "NeuralDualDice":      { "episodic": [(0.01, 0.99)], },
-        "NeuralGenDice":       { "episodic": [], "continuing": [], },
-        "NeuralGradientDice":  { "episodic": [], "continuing": [], },
-    }
-)
-
 # computer_sleep()
 
 # ---------------------------------------------------------------- #

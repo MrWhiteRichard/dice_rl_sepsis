@@ -17,6 +17,8 @@ get_act_evaluation = lambda obs: 1 - int( np.random.random() < prob )
 # ---------------------------------------------------------------- #
 # evaluation
 
+n_trajectories = 1_000
+
 gammas = np.array([0.9, 0.99, 0.999, 0.9999])
 
 projected = True
