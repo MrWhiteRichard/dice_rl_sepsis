@@ -7,9 +7,6 @@
 [submodule "sepsis_amsterdam"]
 	path = sepsis_amsterdam
 	url = https://github.com/MrWhiteRichard/sepsis_amsterdam.git
-[submodule "dice_rl"]
-	path = dice_rl
-	url = https://github.com/MrWhiteRichard/dice_rl.git
 [submodule "sepsis_mimic_iv"]
 	path = sepsis_mimic_iv
 	url = https://github.com/lorenzkap/sepsis_mimic_iv.git
