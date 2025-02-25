@@ -40,13 +40,10 @@ replace `'/'` by `'_'`.
 
 ### Generic Algorithm Code
 
-- `dice_rl`:
-fork of the original repository [`dice_rl`](https://github.com/google-research/dice_rl.git)
-
 - `dice_rl_TU_Vienna`:
 re-implementation of all Dice-algorithms and related base calsses for tools like analytical solvers, plotting, dataset conversion, etc.
 
-### Application Specific `dice_rl`-Code
+### Application Specific Code
 
 - `plugins`:
 outsource code for your custom application, so you don't have everything in the `.ipynb`-notebooks and `.py`-scripts
