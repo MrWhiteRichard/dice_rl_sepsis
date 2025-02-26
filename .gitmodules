@@ -15,4 +15,4 @@
 	url = https://github.com/zt95/infinite-horizon-off-policy-estimation.git
 [submodule "infinite_horizon_off_policy_estimation"]
 	path = infinite_horizon_off_policy_estimation
-	url = https://github.com/zt95/infinite-horizon-off-policy-estimation.git
+	url = https://github.com/MrWhiteRichard/infinite_horizon_off_policy_estimation.git
