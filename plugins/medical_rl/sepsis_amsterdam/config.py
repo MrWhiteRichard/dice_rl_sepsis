@@ -26,12 +26,10 @@ id_dataset = {
 
 # ---------------------------------------------------------------- #
 
-dir_base = os_path_join("data", "medical_rl", "sepsis_amsterdam")
-dir_images = {
-    ct: os_path_join(dir_base, "images", ct)
-        for ct in ["continuous", "tabular"]
-}
-dir_split = os_path_join(dir_base, id_split)
+dir_data   = os_path_join("data",   "medical_rl", "sepsis_amsterdam")
+dir_images = os_path_join("images", "medical_rl", "sepsis_amsterdam")
+
+dir_split = os_path_join(dir_data, id_split)
 dir_clustering = os_path_join(dir_split, id_clustering)
 dir_policy = {
     "continuous": os_path_join(dir_split, id_policy["continuous"]),

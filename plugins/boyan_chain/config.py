@@ -15,10 +15,7 @@ prob = 0.1
 
 # ---------------------------------------------------------------- #
 
-dir_base = os.path.join("data", "boyan_chain")
-dir_images = {
-    ct: os.path.join(dir_base, "images", ct)
-        for ct in ["continuous", "tabular"]
-}
+dir_data   = os.path.join("data",   "boyan_chain")
+dir_images = os.path.join("images", "boyan_chain")
 
 # ---------------------------------------------------------------- #

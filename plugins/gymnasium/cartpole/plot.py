@@ -54,7 +54,7 @@ def get_logs_and_plot(
     file_name = suptitle.replace("\n", "; ")
 
     return get_logs_and_plot_general(
-        dir_base,
+        dir_data,
         #
         hyperparameters_evaluation,
         hyperparameters_dict,

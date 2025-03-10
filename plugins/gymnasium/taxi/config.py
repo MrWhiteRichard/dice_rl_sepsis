@@ -19,11 +19,11 @@ id_policy = {
 
 # ---------------------------------------------------------------- #
 
-dir_base = os.path.join("data", "gymnasium", "taxi")
-dir_images = os.path.join(dir_base, "images")
+dir_data   = os.path.join("data",   "gymnasium", "taxi")
+dir_images = os.path.join("images", "gymnasium", "taxi")
 
 dir_policy = {
-    kind: os.path.join(dir_base, id_policy[kind])
+    kind: os.path.join(dir_data, id_policy[kind])
         for kind in kinds
 }
 

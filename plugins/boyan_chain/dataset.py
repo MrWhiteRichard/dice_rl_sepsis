@@ -7,7 +7,7 @@ from gymnasium.wrappers.time_limit import TimeLimit
 from dice_rl_TU_Vienna.dataset import get_dataset as get_dataset_general
 
 from plugins.boyan_chain.environment import get_env
-from plugins.boyan_chain.config import dir_base, prob
+from plugins.boyan_chain.config import dir_data, prob
 
 # ---------------------------------------------------------------- #
 
@@ -18,7 +18,7 @@ def get_dataset_by_samples(seed, n_samples, N, kind, verbosity=0):
     hyperparameters = {
         "seed": seed, "n_samples": n_samples, "N": N, "kind": kind, }
     dataset, id_datset = get_dataset_general(
-        dir_base, env, get_act, hyperparameters, verbosity, )
+        dir_data, env, get_act, hyperparameters, verbosity, )
 
     probs = [ np.array([prob, 1-prob]) ] * len(dataset)
     dataset["probs_next"] = probs
@@ -32,7 +32,7 @@ def get_dataset_by_trajectories(seed, n_trajectories, get_act, N, kind, verbosit
     hyperparameters = {
         "seed": seed, "n_trajectories": n_trajectories, "N": N, "kind": kind, }
     dataset, id_datset = get_dataset_general(
-        dir_base, env, get_act, hyperparameters, verbosity, )
+        dir_data, env, get_act, hyperparameters, verbosity, )
 
     probs = [ np.array([prob, 1-prob]) ] * len(dataset)
     dataset["probs_next"] = probs

@@ -75,7 +75,7 @@ for seed in seeds:
 
         dataset[seed][kind] = dataset_
         id_dataset = id_dataset_
-        dir[seed][kind] = os.path.join(dir_base, id_dataset_) # type: ignore
+        dir[seed][kind] = os.path.join(dir_data, id_dataset_) # type: ignore
 
 # ---------------------------------------------------------------- #
 # plotting

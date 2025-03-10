@@ -19,10 +19,10 @@ id_env = {
 
 # ---------------------------------------------------------------- #
 
-dir_base = os.path.join("data", "gymnasium", "frozenlake")
-dir_images = os.path.join(dir_base, "images")
+dir_data   = os.path.join("data",   "gymnasium", "frozen_lake")
+dir_images = os.path.join("images", "gymnasium", "frozen_lake")
 
-dir_env = { kind: os.path.join(dir_base, id_env[kind]) for kind in kinds }
+dir_env = { kind: os.path.join(dir_data, id_env[kind]) for kind in kinds }
 
 # ---------------------------------------------------------------- #
 
