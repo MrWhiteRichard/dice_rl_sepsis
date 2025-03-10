@@ -8,7 +8,7 @@ from dice_rl_TU_Vienna.preprocess import one_hot_encode_observation
 from dice_rl_TU_Vienna.utils.general import merge_dicts
 
 from plugins.boyan_chain.analytical_solver import AnalyticalSolverBoyanChain
-from plugins.boyan_chain.dataset import get_dataset
+from plugins.boyan_chain.dataset import get_dataset_by_samples
 from plugins.boyan_chain.config import *
 
 # ---------------------------------------------------------------- #
@@ -71,12 +71,11 @@ pbar_keys = ["loss", "pv_s", "pv_w", "cos_angle", "pv_error_s", "pv_error_w", "s
 for seed in seeds:
     for kind in kinds:
 
-        dataset_, id_dataset_ = get_dataset(seed, n_samples, N, kind)
-        assert id_dataset_ is not None
+        dataset_, id_dataset_ = get_dataset_by_samples(seed, n_samples, N, kind)
 
         dataset[seed][kind] = dataset_
         id_dataset = id_dataset_
-        dir[seed][kind] = os.path.join(dir_base, id_dataset_)
+        dir[seed][kind] = os.path.join(dir_base, id_dataset_) # type: ignore
 
 # ---------------------------------------------------------------- #
 # plotting
