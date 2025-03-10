@@ -14,32 +14,32 @@ from plugins.medical_rl.sepsis_amsterdam.continuous.config import *
 
 def run_sepsis_amsterdam_continuous(loops):
 
-    for learning_rate, hidden_dimensions in loops.get("NeuralDualDice", []):
+    for learning_rate_, hidden_dimensions_ in loops.get("NeuralDualDice", []):
         estimator = NeuralDualDice(
             gamma, p,
             seed, batch_size,
-            learning_rate, hidden_dimensions,
+            learning_rate_, hidden_dimensions_,
             obs_min, obs_max, n_act, obs_shape,
             dataset, preprocess_obs, preprocess_act, preprocess_rew,
             dir, get_recordings,
         )
         estimator.evaluate_loop(n_steps, verbosity, pbar_keys)
 
-    for learning_rate, hidden_dimensions in loops.get("NeuralGenDice", []):
+    for learning_rate_, hidden_dimensions_ in loops.get("NeuralGenDice", []):
         estimator = NeuralGenDice(
             gamma, lamda,
             seed, batch_size,
-            learning_rate, hidden_dimensions,
+            learning_rate_, hidden_dimensions_,
             obs_min, obs_max, n_act, obs_shape,
             dataset, preprocess_obs, preprocess_act, preprocess_rew,
             dir, get_recordings,
         )
         estimator.evaluate_loop(n_steps, verbosity, pbar_keys)
 
-    for learning_rate, hidden_dimensions in loops.get("NeuralGradientDice", []):
+    for learning_rate_, hidden_dimensions_ in loops.get("NeuralGradientDice", []):
         estimator = NeuralGradientDice(
             gamma, lamda,
-            seed, batch_size, learning_rate, hidden_dimensions,
+            seed, batch_size, learning_rate_, hidden_dimensions_,
             obs_min, obs_max, n_act, obs_shape,
             dataset, preprocess_obs, preprocess_act, preprocess_rew,
             dir, get_recordings,
@@ -48,11 +48,19 @@ def run_sepsis_amsterdam_continuous(loops):
 
 # ---------------------------------------------------------------- #
 
+# run_sepsis_amsterdam_continuous(
+#     loops={
+#         "NeuralDualDice":     [ ( learning_rate_, [128], ) for learning_rate_ in learning_rates ],
+#         "NeuralGenDice":      [ ( learning_rate_, [128], ) for learning_rate_ in learning_rates ],
+#         "NeuralGradientDice": [ ( learning_rate_, [128], ) for learning_rate_ in learning_rates ],
+#     }
+# )
+
 run_sepsis_amsterdam_continuous(
     loops={
-        "NeuralDualDice":     [ ( 1e-4, [128], ), ],
-        "NeuralGenDice":      [],
-        "NeuralGradientDice": [],
+        "NeuralDualDice":     [ ( 1e-4, hidden_dimensions_, ) for hidden_dimensions_ in hidden_dimensionss if hidden_dimensions_ != [128] ],
+        "NeuralGenDice":      [ ( 1e-4, hidden_dimensions_, ) for hidden_dimensions_ in hidden_dimensionss if hidden_dimensions_ != [128] ],
+        "NeuralGradientDice": [ ( 1e-3, hidden_dimensions_, ) for hidden_dimensions_ in hidden_dimensionss if hidden_dimensions_ != [128] ],
     }
 )
 

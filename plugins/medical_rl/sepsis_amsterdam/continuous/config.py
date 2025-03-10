@@ -35,7 +35,7 @@ preprocess_rew = None
 dir = dir_policy["continuous"]
 get_recordings = get_recordings_cos_angle
 
-n_steps = 500_000
+n_steps = 1_000_000
 verbosity = 1
 pbar_keys = None
 

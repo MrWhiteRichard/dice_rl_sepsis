@@ -1,67 +1,69 @@
 # ---------------------------------------------------------------- #
 
-from dice_rl_TU_Vienna.latex import latex_gamma, latex_lambda
+import random
 
-from dice_rl_TU_Vienna.plot.continuous import (
-    get_logs_and_plot as get_logs_and_plot_general, )
+from dice_rl_TU_Vienna.plot.continuous import \
+    get_logs_and_plot as get_logs_and_plot_general
+from dice_rl_TU_Vienna.utils.general import dict_to_str, flatten_dict
+
+from plugins.medical_rl.sepsis_amsterdam.config import *
 
 # ---------------------------------------------------------------- #
 
-def get_plot_logs(
-        get_behavior_policy_value,
+def get_logs_and_plot(
+        get_policy_value,
         #
-        outputs_dir,
-        hparam_str_policy, hparam_str_dataset,
-        estimator_name, hparam_str_evaluation,
+        hyperparameters_evaluation,
+        hyperparameters_dict,
         #
-        title=None,
-        xlim=None,
-        ylim_1=None, ylim_2=None, ylim_3=None,
-        n_ma_1=None, n_ma_2=None, n_ma_3=None,
+        ylims=None,
+        n_samples_moving_average=None,
         #
-        save_dir=None, file_name=None,
+        dir_save=None,
+        verbosity=0,
     ):
 
-    def get_suptitle(gammas):
-        return f"Medical Continuous"
-
-    def get_pv_baselines(gamma):
-        pv = get_behavior_policy_value(gamma)
-
-        return [
-            {
-                "label": "OnPE original",
-                "value": pv,
-                "linestyle": "dotted",
-            },
-        ]
-
-    error_tags = None
-    plot_types = None
-
-    hparams_title = [
-        "gamma",
-        "batch-size",
-        "hidden-dimensions",
-        "mlp-regularizer",
+    suptitle = f"Sepsis Amsterdam Continuous" + "\n" + (
+        dict_to_str( flatten_dict( random.choice(hyperparameters_evaluation), ), blacklist=["learning_rate"], )
+    )
+    titles = [
+        {
+            "pv": f"learning_rate={dictionary['learning_rate']}"
+        }
+            for dictionary in hyperparameters_evaluation
     ]
+    hlines = [
+        {
+            "pv": [
+                {
+                    "y": get_policy_value["behavior"](dictionary['gamma']),
+                    "label": "OnPE behavior",
+                    "linestyle": "--",
+                },
+            ]
+        }
+            for dictionary in hyperparameters_evaluation
+    ]
+    append_extras = None
+
+    file_name = suptitle.replace("\n", "; ")
 
     return get_logs_and_plot_general(
-        get_suptitle, get_pv_baselines,
+        dir_base,
         #
-        outputs_dir,
-        hparam_str_policy, hparam_str_dataset,
-        estimator_name, hparam_str_evaluation,
+        hyperparameters_evaluation,
+        hyperparameters_dict,
         #
-        error_tags, plot_types,
+        suptitle,
+        titles,
+        ylims,
+        n_samples_moving_average,
+        hlines,
         #
-        title,
-        xlim,
-        ylim_1, ylim_2, ylim_3,
-        n_ma_1, n_ma_2, n_ma_3,
+        append_extras,
         #
-        save_dir, file_name,
-        hparams_title,
+        dir_save, file_name,
+        verbosity,
     )
 
 # ---------------------------------------------------------------- #
