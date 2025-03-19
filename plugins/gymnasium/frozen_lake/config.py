@@ -43,26 +43,3 @@ modified = True
 lamda = 1e-6
 
 # ---------------------------------------------------------------- #
-# plotting
-
-env_title = "Frozen Lake"
-
-colors_OnPE = ["grey"]
-colors_VAFE = ["blue"]
-colors_DICE = ["orange", "green", "red"]
-colors_OffPE = colors_VAFE + colors_DICE
-color_ref = "black"
-
-markers_OnPE = ["^"]
-markers_VAFE = ["1"]
-markers_DICE = ["2", "3", "4"]
-markers_OffPE = markers_VAFE + markers_DICE
-marker_ref = "."
-
-colors = colors_OnPE + colors_OffPE + [color_ref]
-colors_lim = ["grey", "orange", "black"]
-
-markers = markers_OnPE + markers_OffPE + [marker_ref]
-markers_lim = ["^", "2", "."]
-
-# ---------------------------------------------------------------- #
