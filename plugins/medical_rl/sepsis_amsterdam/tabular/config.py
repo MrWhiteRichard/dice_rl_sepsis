@@ -5,6 +5,23 @@ from dice_rl_TU_Vienna.estimators.get import get_gammas_log10
 from plugins.medical_rl.sepsis_amsterdam.config import *
 
 # ---------------------------------------------------------------- #
+# clustering
+
+seed = 42
+n_clusters = 256
+n_init = 10
+
+n_obs = n_clusters + 2
+n_act = 5
+
+# ---------------------------------------------------------------- #
+# dataset
+
+n_trajectories = 10_000
+max_trajectory_length = None
+# seed
+
+# ---------------------------------------------------------------- #
 # evaluation
 
 gammas = get_gammas_log10()
@@ -30,13 +47,5 @@ markers_OffPE = markers_VAFE + markers_DICE
 
 colors_lim = colors_OnPE
 markers_lim = markers_OnPE
-
-# ---------------------------------------------------------------- #
-
-n_clusters = 256
-n_init = 10
-
-n_obs = n_clusters + 2
-n_act = 5
 
 # ---------------------------------------------------------------- #
