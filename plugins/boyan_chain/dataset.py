@@ -2,7 +2,7 @@
 
 import numpy as np
 
-from gymnasium.wrappers.time_limit import TimeLimit
+from gymnasium.wrappers import TimeLimit
 
 from dice_rl_TU_Vienna.dataset import get_dataset as get_dataset_general
 
