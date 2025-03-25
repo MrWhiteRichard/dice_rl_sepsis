@@ -30,24 +30,23 @@ n_obs = { N: N + 1 for N in Ns }
 # ---------------------------------------------------------------- #
 # plotting
 
-labels_OnPE = ["OnPE evaluation"]
-labels_VAFE = ["TabularVafe"]
-labels_DICE = ["TabularDice", "TabularDualDice", "TabularGradientDice"]
-labels_ANAL = ["analytical"]
+colors = {
+    "OnPE": "grey",
+    "TabularVafe": "blue",
+    "TabularDice": "orange",
+    "TabularDualDice": "green",
+    "TabularGradientDice": "red",
+    "analytical": "black",
+}
 
-colors_OnPE = ["grey"]
-colors_VAFE = ["blue"]
-colors_DICE = ["orange", "green", "red"]
-colors_ANAL = ["black"]
-
-markers_OnPE = ["^"]
-markers_VAFE = ["1"]
-markers_DICE = ["2", "3", "4"]
-markers_ANAL = ["."]
-
-labels_approx  = labels_OnPE  + labels_VAFE  + labels_DICE
-colors_approx  = colors_OnPE  + colors_VAFE  + colors_DICE
-markers_approx = markers_OnPE + markers_VAFE + markers_DICE
+markers = {
+    "OnPE": "^",
+    "TabularVafe": "1",
+    "TabularDice": "2",
+    "TabularDualDice": "3",
+    "TabularGradientDice": "4",
+    "analytical": ".",
+}
 
 std_girth = 0.5
 alpha = 0.1
