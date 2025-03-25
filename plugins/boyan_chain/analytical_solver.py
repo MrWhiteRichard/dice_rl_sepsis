@@ -4,25 +4,18 @@ import numpy as np
 import tensorflow as tf
 
 from plugins.boyan_chain.environment import get_env
-from plugins.boyan_chain.policy import TFPolicyBoyanChain
 
 from dice_rl_TU_Vienna.estimators.tabular.analytical_solver import AnalyticalSolver
 
 # ---------------------------------------------------------------- #
 
 class AnalyticalSolverBoyanChain(AnalyticalSolver):
-    def __init__(self,
-        N: int,
-        p: float,
-        kind: str = "episodic",
-        enumerate_by: str = "act"):
+    def __init__(self, N, p, kind):
 
         self.N = N
         self.p = p
         self.kind = kind
-        self.enumerate_by = enumerate_by
 
-        self.policy = TFPolicyBoyanChain(N=N, p=p, tabular_continuous="tabular")
         self.env = get_env(seed=None, N=N, kind=kind)
 
         n_obs = self.N + 1
@@ -35,8 +28,7 @@ class AnalyticalSolverBoyanChain(AnalyticalSolver):
         if self.kind == "continuing": assert gamma == 1
 
     def get_index(self, obs, act):
-        if self.enumerate_by == "act": return obs * self.n_act + act
-        if self.enumerate_by == "obs": return obs + self.n_obs * act
+        return obs * self.n_act + act
 
     def get_distributions(self):
         d0 = self.get_d0()
@@ -47,14 +39,11 @@ class AnalyticalSolverBoyanChain(AnalyticalSolver):
         return d0, dD, P, r
 
     def get_act_probs(self, obs):
-        logits = self.policy._logits(obs)
-        probs = tf.nn.softmax(logits)
-
-        return probs
+        return np.array([self.p, 1 - self.p])
 
     def get_obs_next_probs(self, obs, act):
 
-        obs_next = self.env.unwrapped.get_obs_next(obs, act)
+        obs_next = self.env.unwrapped.get_obs_next(obs, act) # type: ignore
 
         probs = np.identity(self.n_obs)[obs_next]
 
@@ -71,8 +60,7 @@ class AnalyticalSolverBoyanChain(AnalyticalSolver):
 
         d0 = np.array(probs_obs_init * probs_act_init)
 
-        if self.enumerate_by == "act": d0 = tf.reshape(d0,   [-1])
-        if self.enumerate_by == "obs": d0 = tf.reshape(d0.T, [-1])
+        d0 = tf.reshape(d0, [-1])
 
         self.d0 = d0
         return d0
@@ -132,10 +120,9 @@ class AnalyticalSolverBoyanChain(AnalyticalSolver):
 def test(N, p, gamma=0.99):
     assert 0 < gamma < 1
 
-    evaluation_policy = TFPolicyBoyanChain(N, p) # type: ignore
-    analytical_solver = BoyanChainAnalyticalSolver(evaluation_policy, "episodic", gamma) # type: ignore
+    analytical_solver = AnalyticalSolverBoyanChain(N, p, "episodic")
 
-    sdc, _ = analytical_solver.solve(gamma)
+    _, (_, sdc), _ = analytical_solver.solve(gamma) # type: ignore
     sd_d = analytical_solver.dD
     sd_p = sdc * sd_d
 
