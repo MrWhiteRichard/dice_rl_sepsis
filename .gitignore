@@ -1,5 +1,6 @@
 data/*
 images/*
+d3rlpy_logs/*
 .DS_Store
 settings.json
 
