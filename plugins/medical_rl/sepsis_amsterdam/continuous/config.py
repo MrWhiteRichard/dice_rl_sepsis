@@ -21,18 +21,21 @@ batch_size = 1024
 learning_rates = [1e0, 1e-1, 1e-2, 1e-3, 1e-4, 1e-5]
 hidden_dimensionss = [ [32], [64], [128], [256], ]
 
-obs_min = np.load( os.path.join(dir_policy["continuous"], "obs_min.npy") )
-obs_max = np.load( os.path.join(dir_policy["continuous"], "obs_max.npy") )
+obs_min = np.load( os.path.join(dir_dataset["continuous"]["neural"], "obs_min.npy") )
+obs_max = np.load( os.path.join(dir_dataset["continuous"]["neural"], "obs_max.npy") )
 n_act = 5
 obs_shape = (382,)
 
-dataset = pd.read_parquet(
-    os.path.join(dir_dataset["continuous"], "dataset.parquet")
-)
+dataset = {
+    k: pd.read_parquet(
+        os.path.join(dir_dataset["continuous"][k], "dataset.parquet")
+    )
+        for k in ["neural", "tabular"]
+}
 preprocess_obs = None
 preprocess_act = None
 preprocess_rew = None
-dir = dir_policy["continuous"]
+dir = dir_dataset["continuous"]["neural"]
 get_recordings = get_recordings_cos_angle
 
 n_steps = 1_000_000

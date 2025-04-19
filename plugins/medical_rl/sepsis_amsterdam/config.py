@@ -24,8 +24,16 @@ dir_images = os_path_join("images", "medical_rl", "sepsis_amsterdam")
 dir_split = os_path_join(dir_data, id_split)
 dir_clustering = os_path_join(dir_split, id_clustering)
 dir_policy = {
-    "continuous": os_path_join(dir_split, id_policy["continuous"]),
+    "continuous": {
+        "neural": os_path_join(dir_split, id_policy["continuous"]),
+        "tabular": os_path_join(dir_clustering, id_policy["continuous"])
+    },
 }
-dir_dataset = {}
+dir_dataset = {
+    "continuous": {
+        "neural": dir_policy["continuous"]["neural"],
+        "tabular": dir_policy["continuous"]["tabular"],
+    }
+}
 
 # ---------------------------------------------------------------- #

@@ -20,7 +20,7 @@ def run_sepsis_amsterdam_continuous(loops):
             seed, batch_size,
             learning_rate_, hidden_dimensions_,
             obs_min, obs_max, n_act, obs_shape,
-            dataset, preprocess_obs, preprocess_act, preprocess_rew,
+            dataset["neural"], preprocess_obs, preprocess_act, preprocess_rew,
             dir, get_recordings,
         )
         estimator.evaluate_loop(n_steps, verbosity, pbar_keys)
@@ -31,7 +31,7 @@ def run_sepsis_amsterdam_continuous(loops):
             seed, batch_size,
             learning_rate_, hidden_dimensions_,
             obs_min, obs_max, n_act, obs_shape,
-            dataset, preprocess_obs, preprocess_act, preprocess_rew,
+            dataset["neural"], preprocess_obs, preprocess_act, preprocess_rew,
             dir, get_recordings,
         )
         estimator.evaluate_loop(n_steps, verbosity, pbar_keys)
@@ -41,7 +41,7 @@ def run_sepsis_amsterdam_continuous(loops):
             gamma, lamda,
             seed, batch_size, learning_rate_, hidden_dimensions_,
             obs_min, obs_max, n_act, obs_shape,
-            dataset, preprocess_obs, preprocess_act, preprocess_rew,
+            dataset["neural"], preprocess_obs, preprocess_act, preprocess_rew,
             dir, get_recordings,
         )
         estimator.evaluate_loop(n_steps, verbosity, pbar_keys)
@@ -58,7 +58,6 @@ def run_sepsis_amsterdam_continuous(loops):
 
 run_sepsis_amsterdam_continuous(
     loops={
-        "NeuralDualDice":     [ ( 1e-4, hidden_dimensions_, ) for hidden_dimensions_ in hidden_dimensionss if hidden_dimensions_ != [128] ],
         "NeuralGenDice":      [ ( 1e-4, hidden_dimensions_, ) for hidden_dimensions_ in hidden_dimensionss if hidden_dimensions_ != [128] ],
         "NeuralGradientDice": [ ( 1e-3, hidden_dimensions_, ) for hidden_dimensions_ in hidden_dimensionss if hidden_dimensions_ != [128] ],
     }
