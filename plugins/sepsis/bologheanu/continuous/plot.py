@@ -6,7 +6,7 @@ from dice_rl_TU_Vienna.plot.continuous import \
     get_logs_and_plot as get_logs_and_plot_general
 from dice_rl_TU_Vienna.utils.general import dict_to_str, flatten_dict
 
-from plugins.medical_rl.sepsis_amsterdam.config import *
+from plugins.sepsis.bologheanu.config import *
 
 # ---------------------------------------------------------------- #
 
@@ -23,7 +23,7 @@ def get_logs_and_plot(
         verbosity=0,
     ):
 
-    suptitle = f"Sepsis Amsterdam Continuous" + "\n" + (
+    suptitle = f"Sepsis Bologheanu Continuous" + "\n" + (
         dict_to_str( flatten_dict( random.choice(hyperparameters_evaluation), ), blacklist=["learning_rate"], )
     )
     titles = [

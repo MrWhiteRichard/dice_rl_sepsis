@@ -2,7 +2,7 @@
 
 from dice_rl_TU_Vienna.estimators.get import get_gammas_log10
 
-from plugins.medical_rl.sepsis_amsterdam.config import *
+from plugins.sepsis.bologheanu.config import *
 
 # ---------------------------------------------------------------- #
 # clustering
@@ -42,7 +42,7 @@ lamda = 1e-6
 # ---------------------------------------------------------------- #
 # plotting
 
-env_title = "Sepsis Amsterdam Tabular"
+env_title = "Sepsis Bologheanu Tabular"
 
 colors_OnPE = ["black", "lightgrey", "grey"]
 colors_VAFE = ["blue"]

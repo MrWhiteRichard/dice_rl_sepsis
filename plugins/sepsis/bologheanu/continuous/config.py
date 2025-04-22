@@ -7,7 +7,7 @@ import pandas as pd
 
 from dice_rl_TU_Vienna.get_recordings import get_recordings_cos_angle
 
-from plugins.medical_rl.sepsis_amsterdam.config import *
+from plugins.sepsis.bologheanu.config import *
 
 # ---------------------------------------------------------------- #
 # evaluation

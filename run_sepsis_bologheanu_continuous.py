@@ -8,11 +8,11 @@ from dice_rl_TU_Vienna.estimators.neural.neural_gradient_dice import NeuralGradi
 
 from dice_rl_TU_Vienna.utils.bedtime import computer_sleep
 
-from plugins.medical_rl.sepsis_amsterdam.continuous.config import *
+from plugins.sepsis.bologheanu.continuous.config import *
 
 # ---------------------------------------------------------------- #
 
-def run_sepsis_amsterdam_continuous(loops):
+def run_sepsis_bologheanu_continuous(loops):
 
     for learning_rate_, hidden_dimensions_ in loops.get("NeuralDualDice", []):
         estimator = NeuralDualDice(
@@ -48,7 +48,7 @@ def run_sepsis_amsterdam_continuous(loops):
 
 # ---------------------------------------------------------------- #
 
-# run_sepsis_amsterdam_continuous(
+# run_sepsis_bologheanu_continuous(
 #     loops={
 #         "NeuralDualDice":     [ ( learning_rate_, [128], ) for learning_rate_ in learning_rates ],
 #         "NeuralGenDice":      [ ( learning_rate_, [128], ) for learning_rate_ in learning_rates ],
@@ -56,7 +56,7 @@ def run_sepsis_amsterdam_continuous(loops):
 #     }
 # )
 
-run_sepsis_amsterdam_continuous(
+run_sepsis_bologheanu_continuous(
     loops={
         "NeuralGenDice":      [ ( 1e-4, hidden_dimensions_, ) for hidden_dimensions_ in hidden_dimensionss if hidden_dimensions_ != [128] ],
         "NeuralGradientDice": [ ( 1e-3, hidden_dimensions_, ) for hidden_dimensions_ in hidden_dimensionss if hidden_dimensions_ != [128] ],

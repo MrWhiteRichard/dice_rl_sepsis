@@ -18,8 +18,8 @@ id_dataset = {}
 
 # ---------------------------------------------------------------- #
 
-dir_data   = os_path_join("data",   "medical_rl", "sepsis_amsterdam")
-dir_images = os_path_join("images", "medical_rl", "sepsis_amsterdam")
+dir_data   = os_path_join("data",   "sepsis", "bologheanu")
+dir_images = os_path_join("images", "sepsis", "bologheanu")
 
 dir_split = os_path_join(dir_data, id_split)
 dir_clustering = os_path_join(dir_split, id_clustering)
