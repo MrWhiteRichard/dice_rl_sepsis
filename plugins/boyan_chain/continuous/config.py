@@ -93,7 +93,7 @@ colors = {
 }
 markers = {
     "episodic": ["3", "4", "+"],
-    "continuingc": ["4", "+"],
+    "continuing": ["4", "+"],
 }
 
 names = {
