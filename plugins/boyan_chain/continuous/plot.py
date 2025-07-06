@@ -6,7 +6,7 @@ from dice_rl_TU_Vienna.latex import latex_labels
 from dice_rl_TU_Vienna.plot.continuous import \
     get_logs_and_plot as get_logs_and_plot_general
 from dice_rl_TU_Vienna.utils.general import dict_to_str
-from dice_rl_TU_Vienna.utils.numpy import moving_average
+from dice_rl_TU_Vienna.utils.numpy import moving_average_N
 
 from plugins.boyan_chain.continuous.config import *
 
